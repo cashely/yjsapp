@@ -1,16 +1,19 @@
+//首页-主页
 import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 import Slider from './slider';
 import Title from './title';
 import List from './list';
+import News from './news';
 export default class Home extends Component{
 	constructor(props) {
 	  super(props);
-	
+
 	  this.state = {
       	datas:[]
 	  };
@@ -18,13 +21,16 @@ export default class Home extends Component{
 
 	render(){
 		return(
-			<View>
-				<Slider/>
+  			<View style={{flex:1}}>
+          <ScrollView>
+  				    <Slider/>
 	            <Title title="通知公告"/>
+	            <List {...this.props} dataSource={this.state.datas}/>
+              <News title="新闻资讯"/>
+	            <Title {...this.props} title="政策法规"/>
 	            <List dataSource={this.state.datas}/>
-	            <Title title="政策法规"/>
-	            <List dataSource={this.state.datas}/>
-			</View>
+          </ScrollView>
+  			</View>
 		)
 	}
 

@@ -9,7 +9,9 @@
   "dependencies": {
     "react": "15.3.2",
     "react-native": "0.35.0",
+    "react-native-drawer": "^2.3.0",
     "react-native-icons": "^0.7.1",
+    "react-native-scrollable-tab-view": "^0.6.0",
     "react-native-swiper": "^1.5.2",
     "react-native-vector-icons": "^2.1.0",
     "react-redux": "^4.4.5",

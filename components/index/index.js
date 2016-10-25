@@ -1,3 +1,4 @@
+//首页
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -5,68 +6,80 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {connect} from 'react-redux';
 
+import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 
 import Home from './index/home.js';
+import Notice from '../notice/notice';
+
+class Main extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return (
+      <View style={styles.content}>
+        <ScrollableTabView renderTabBar={() => <ScrollableTabBar />}>
+          <Home {...this.props} tabLabel="首页要闻"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+          <Notice {...this.props} tabLabel="通知公告"/>
+        </ScrollableTabView>
+      </View>
+    )
+  }
+}
+
+class ScrollTabTitle extends Component {
+  render(){
+    console.log(this.props);
+    return(
+      <View style={styles.navBar}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              {
+                this.props.tabs.map((ele,index)=>{
+                  return (
+                    <TouchableOpacity key={`scrollTabView${index}`} onPress={()=>{this.props.goToPage(index)}}>
+                      <Text style={this.props.activeTab == index ? styles.navActive : styles.navTitle}>{ele}</Text>
+                    </TouchableOpacity>
+                  )
+                })
+              }
+            </ScrollView>
+      </View>
+    )
+  }
+}
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      active:1
-    };
-    
+
+
 
     // console.dir(this.props);
   }
   componentWillMount(){
   }
-  
-
-  _navPress(id){
-    this.setState({
-      active:id
-    });
+  componentDidMount() {
   }
+
+
   render() {
     return (
-      <View style={styles.content}>
-        <View style={styles.navBar}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity onPress={this._navPress.bind(this,1)}>
-                  <Text style={this.state.active == 1 ? styles.navActive : styles.navTitle}>首页要闻</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,2)}>
-                  <Text style={this.state.active == 2 ? styles.navActive : styles.navTitle}>通知公告</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,3)}>
-                  <Text style={this.state.active == 3 ? styles.navActive : styles.navTitle}>新闻资讯</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,4)}>
-                  <Text style={this.state.active == 4 ? styles.navActive : styles.navTitle}>中标公告</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,5)}>
-                  <Text style={this.state.active == 5 ? styles.navActive : styles.navTitle}>政策法规</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,6)}>
-                  <Text style={this.state.active == 6 ? styles.navActive : styles.navTitle}>非诚信名单</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._navPress.bind(this,7)}>
-                  <Text style={this.state.active == 7 ? styles.navActive : styles.navTitle}>培训通知</Text>
-                </TouchableOpacity>
-              </ScrollView>
-        </View>
-        <View style={styles.main}>
-          <ScrollView>
-            <Home {...this.props}/>
-          </ScrollView>
-        </View>
-      </View>
+
+        <Main {...this.props}/>
     );
   }
 }
@@ -105,7 +118,8 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   main:{
-    flex:1
+    flex:1,
+    overflow:'hidden'
   },
   image:{
     flex:1

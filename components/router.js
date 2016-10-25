@@ -1,3 +1,4 @@
+//路由配置
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -9,21 +10,40 @@ import {
 
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Drawer from 'react-native-drawer';
 
 import Index from './index/index';
+import Menu from './common/drawer';
+
+
+//router components
+import Search from './search/search';
+import SearchHeader from './search/searchHeader';
+
 
 export default class Router extends Component {
   componentDidMount(){
+
   }
 
-  
-  
+
+  _toggleDrawer(){
+    this._drawer.open();
+    console.log(this._drawer.getHeight());
+  }
+  _searchHandle(navigator){
+    navigator.push({
+      component:Search,
+      name:'search',
+      title:SearchHeader
+    });
+  }
   render() {
     //控制导航条
     let $navBar = <Navigator.NavigationBar
          routeMapper={{
            LeftButton: (route, navigator, index, navState) =>
-            { 
+            {
               if(route.leftButton){
                 return route.leftButton(route, navigator, index, navState);
               } else{
@@ -31,33 +51,53 @@ export default class Router extends Component {
               }
             },
            RightButton: (route, navigator, index, navState) =>
-             { 
+             {
                 if(route.rightButton){
-                  return route.rightButton(route, navigator, index, navState); 
+                  return route.rightButton(route, navigator, index, navState);
                 }else{
                   return false
                 }
              },
            Title: (route, navigator, index, navState) =>
-             { return (<View style={styles.title}><Text style={styles.titleText}>{route.title}</Text></View>); },
+             {
+                if(typeof route.title == 'string'){
+                  return (<View style={styles.title}><Text style={styles.titleText} numberOfLines={1}>{route.title}</Text></View>);
+                }else if(typeof route.title == 'function'){
+                  return <route.title/>;
+                }else{
+                  return (<View style={styles.title}><Text style={styles.titleText}>广东省药品交易中心</Text></View>)
+                }
+             }
          }}
          style={styles.titleBar}
-       />; 
+       />;
+
 
 
     return (
+      <Drawer
+        type="displace"
+        content={<Menu/>}
+        panCloseMask={0.2}
+        openDrawerOffset={100}
+        openDrawerOffset={0.5}
+        ref={(ref)=> this._drawer = ref}
+        tweenHandler={(ratio) => ({
+          main: { opacity:(2-ratio)/2 }
+        })}
+      >
         <Navigator
           initialRoute = {{
             name:'defaultRuote',
             component:Index,
-            title:"广东省药品交易中心",
+            title:'广东省药品交易中心',
             leftButton:
               (route)=>{
-                return <TouchableOpacity style={styles.buttonMenu}><Icon name="list-ul" size={20} color="#fff"/></TouchableOpacity>
+                return <TouchableOpacity onPress={this._toggleDrawer.bind(this)} style={styles.buttonMenu}><Icon name="list-ul" size={20} color="#fff"/></TouchableOpacity>
               },
             rightButton:
-              ()=>{
-                return <TouchableOpacity style={styles.buttonMenu}><Icon name="search" size={20} color="#fff"/></TouchableOpacity>
+              (route,navigator)=>{
+                return <TouchableOpacity onPress={this._searchHandle.bind(this,navigator)} style={styles.buttonMenu}><Icon name="search" size={20} color="#fff"/></TouchableOpacity>
               }
           }}
 
@@ -67,7 +107,7 @@ export default class Router extends Component {
 
           configureScene ={
             (route, routeStack)=>{
-               return Navigator.SceneConfigs.FloatFromBottom
+               return Navigator.SceneConfigs.PushFromRight
             }
           }
           renderScene = {
@@ -78,6 +118,7 @@ export default class Router extends Component {
           }
           style={{flex:1}}
         />
+        </Drawer>
     );
   }
 }
@@ -90,7 +131,8 @@ const styles = StyleSheet.create({
   },
   title:{
     flex:1,
-    justifyContent:'center'
+    justifyContent:'center',
+    flexWrap:'nowrap'
   },
   titleText:{
     fontWeight:'bold',
