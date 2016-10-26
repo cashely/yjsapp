@@ -16,8 +16,13 @@ import {connect} from 'react-redux';
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 
-import Home from './index/home.js';
+import Home from './index/home';
 import Notice from '../notice/notice';
+import News from '../news/news';
+import Bid from '../bid/bid';
+import Policy from '../policy/policy';
+import Roll from '../roll/roll';
+import Train from '../train/train';
 
 class Main extends Component {
   constructor(props){
@@ -30,12 +35,11 @@ class Main extends Component {
         <ScrollableTabView renderTabBar={() => <ScrollableTabBar />}>
           <Home {...this.props} tabLabel="首页要闻"/>
           <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
+          <News {...this.props} tabLabel="新闻资讯"/>
+          <Bid {...this.props} tabLabel="中标公告"/>
+          <Policy {...this.props} tabLabel="政策法规"/>
+          <Roll {...this.props} tabLabel="非诚信名单"/>
+          <Train {...this.props} tabLabel="培训通知"/>
         </ScrollableTabView>
       </View>
     )

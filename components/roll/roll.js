@@ -2,101 +2,66 @@ import React,{Component} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet
 } from 'react-native';
 import MainSearch from '../common/mainSearch';
 import List from '../index/index/list';
-import Select from '../common/select';
-import Icon from 'react-native-vector-icons/FontAwesome';
-// import Picker from 'react-native-picker';
-export default class Notice extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      isVisible:false
-    }
-
-  }
-  _sureButton(value){
-
-    this.setState({
-      isVisible:false
-    });
-  }
-  _cancelButton(){
-    this.setState({
-      isVisible:false
-    })
-  }
+export default class Roll extends Component {
   render(){
     const datas = [{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:true,
       time:'2016-08-01',
-      imgUrl:'http://img1.imgtn.bdimg.com/it/u=2411021168,1510233833&fm=21&gp=0.jpg'
+      imgUrl:'http://g.hiphotos.baidu.com/zhidao/pic/item/a71ea8d3fd1f413491fb9cbe271f95cad0c85e25.jpg'
     },{
-      type:'医用耗材',
       title:'一期医用耗材生产企业报名系统操作培训的通知',
       isNew:true,
-      time:'2016-08-02'
+      time:'2016-08-02',
+      imgUrl:'http://h.hiphotos.baidu.com/zhidao/pic/item/29381f30e924b8994ef979bd6e061d950b7bf66a.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-03',
-      imgUrl:'http://img5.imgtn.bdimg.com/it/u=1096487389,4227886736&fm=21&gp=0.jpg'
+      imgUrl:'http://pic.baike.soso.com/p/20140514/20140514092502-89274376.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-04',
-      imgUrl:'http://img5.imgtn.bdimg.com/it/u=397736957,2414835366&fm=21&gp=0.jpg'
+      imgUrl:'http://upload.cccnews.com.cn/2014/1124/1416814817316.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-05',
-      imgUrl:'http://img4.imgtn.bdimg.com/it/u=220980845,3087446489&fm=21&gp=0.jpg'
+      imgUrl:'http://att.bbs.duowan.com/forum/201307/11/150628rtjmtk2cjtij8x2m.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-06',
-      imgUrl:'http://img3.imgtn.bdimg.com/it/u=2088906315,2059290942&fm=21&gp=0.jpg'
+      imgUrl:'http://img5.pcpop.com/ArticleImages/picshow/0x0/20110620/2011062017385043637.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-07',
-      imgUrl:'http://img1.imgtn.bdimg.com/it/u=3881750147,3677005026&fm=21&gp=0.jpg'
+      imgUrl:'http://i-7.vcimg.com/trim/3e9cb413e355e3d2e35a28b2d9bfb2fb232003/trim.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-08',
-      imgUrl:'http://img3.imgtn.bdimg.com/it/u=3820515754,1064316039&fm=21&gp=0.jpg'
+      imgUrl:'http://www.cdsoso.org/images/w/EeKTdmww.jpg'
     },{
-      type:'药品交易',
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
       isNew:false,
       time:'2016-08-09',
-      imgUrl:'http://img3.imgtn.bdimg.com/it/u=4284362590,246341097&fm=21&gp=0.jpg'
+      imgUrl:'http://imgsrc.baidu.com/forum/pic/item/b90e7bec54e736d1c8ea234f9b504fc2d46269f8.jpg'
     }];
     return(
       <View style={styles.content}>
-        <Select value={"1"} isVisible={this.state.isVisible} sureButton={this._sureButton.bind(this)} cancelButton={this._cancelButton.bind(this)}/>
         <MainSearch backgroundColor="#e1e1e1" iconColor="#666" buttonColor="#4078c0"/>
         <List {...this.props} dataSource={datas}/>
-        <TouchableOpacity onPress={()=>{this.setState({isVisible:true})}}>
-          <Text>打开</Text>
-        </TouchableOpacity>
       </View>
     )
   }
 }
-
 const styles  = StyleSheet.create({
   content:{
     flex:1,

@@ -41,17 +41,23 @@ export default class List extends Component{
         }
         renderRow={
           (ele)=>{
-            return <View style={{borderBottomWidth:1,borderBottomColor:'#e1e1e1',paddingBottom:10,paddingTop:10}}>
-              <Text onPress={ this._linkHandle.bind(this,ele.title) }>
-                <Text style={{color:'red'}}>[{ele.type}]</Text><Text numberOfLines={1}>{ele.title}</Text>{
-                  ele.isNew ? <Text style={{color:'red'}}>NEW</Text> : false
-                }
-              </Text>
-              <View>
-                <Text style={{textAlign:'right',color:'#666',fontSize:12}}>{ele.time}</Text>
-              </View>
+            return (
+              <View style={{borderBottomWidth:1,borderBottomColor:'#e1e1e1',paddingBottom:10,paddingTop:10}}>
+                <Text onPress={ this._linkHandle.bind(this,ele.title) }>
+                  {
+                    ele.type ? <Text style={{color:'red'}}>[{ele.type}]</Text> : null
+                  }
+                  <Text numberOfLines={1}>{ele.title}</Text>
+                  {
+                    ele.isNew ? <Text style={{color:'red'}}>NEW</Text> : false
+                  }
+                </Text>
+                <View>
+                  <Text style={{textAlign:'right',color:'#666',fontSize:12}}>{ele.time}</Text>
+                </View>
 
-            </View>
+              </View>
+            )
           }
         }
       />
