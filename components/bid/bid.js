@@ -7,6 +7,9 @@ import {
 import MainSearch from '../common/mainSearch';
 import List from '../index/index/list';
 export default class Bid extends Component {
+  constructor(props){
+    super(props);
+  }
   render(){
     const datas = [{
       title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
@@ -55,7 +58,9 @@ export default class Bid extends Component {
     }];
     return(
       <View style={styles.content}>
-        <MainSearch backgroundColor="#e1e1e1" iconColor="#666" buttonColor="#4078c0"/>
+        <View style={styles.mainBar}>
+          <MainSearch backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
+        </View>
         <List {...this.props} dataSource={datas}/>
       </View>
     )
@@ -65,5 +70,14 @@ const styles  = StyleSheet.create({
   content:{
     flex:1,
     backgroundColor:'#fff'
+  },
+  mainBar:{
+    height:44,
+    borderBottomWidth:1,
+    backgroundColor:'#e1e1e1',
+    borderBottomColor:'#d1d1d1',
+    paddingHorizontal:10,
+    flexDirection:'row',
+    alignItems:'center'
   }
 })

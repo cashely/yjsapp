@@ -52,16 +52,16 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   content:{
     flex:1,
-    backgroundColor:'#333'
+    backgroundColor:'#fff'
   },
   logoContent:{
     paddingTop:44,
-    alignItems:'center'
-
+    paddingBottom:20,
+    alignItems:'center',
+    backgroundColor:'#4078c0'
   },
   logoImage:{
     flex:1,
-
     width:elementScale(50),
     height:elementScale(50)
   },
@@ -74,20 +74,24 @@ const styles = StyleSheet.create({
   },
   menu:{
     marginTop:elementScale(20),
-    paddingLeft:elementScale(30),
+    paddingLeft:elementScale(20),
+    paddingLeft:elementScale(10),
   },
   item:{
     flex:1,
+    paddingLeft:10,
     flexDirection:'row',
     alignItems:'center',
+    borderBottomWidth:1,
+    borderBottomColor:'#d1d1d1',
     paddingVertical:elementScale(16)
   },
   icon:{
-    color:'#fff',
+    color:'#696969',
     width:30
   },
   text:{
-    color:'#fff',
+    color:'#696969',
     textAlign:'left'
   }
 })

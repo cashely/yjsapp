@@ -21,7 +21,7 @@ export default class Home extends Component{
 
 	render(){
 		return(
-  			<View style={{flex:1}}>
+  			<View style={styles.content}>
           <ScrollView>
   				    <Slider/>
 	            <Title title="通知公告"/>
@@ -86,3 +86,8 @@ export default class Home extends Component{
 	    })
 	  }
 }
+const styles = StyleSheet.create({
+  content:{
+    flex:1
+  }
+})

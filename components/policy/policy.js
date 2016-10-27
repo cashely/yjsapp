@@ -6,7 +6,19 @@ import {
 } from 'react-native';
 import MainSearch from '../common/mainSearch';
 import List from '../index/index/list';
+import Select from '../common/select';
 export default class Policy extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      value:0
+    }
+  }
+  _sureButton(value){
+    this.setState({
+      value:value
+    })
+  }
   render(){
     const datas = [{
       type:'药品交易',
@@ -63,9 +75,37 @@ export default class Policy extends Component {
       time:'2016-08-09',
       imgUrl:'http://imgsrc.baidu.com/forum/pic/item/b90e7bec54e736d1c8ea234f9b504fc2d46269f8.jpg'
     }];
+    const menuItems = [
+      {
+        value:0,
+        text:'全部'
+      },
+      {
+        value:1,
+        text:'政策法规'
+      },{
+        value:2,
+        text:'国家法规'
+      },
+      {
+        value:3,
+        text:'广东法规'
+      },
+      {
+        value:4,
+        text:'交易规则'
+      },
+      {
+        value:5,
+        text:'政策解读'
+      }
+    ];
     return(
       <View style={styles.content}>
-        <MainSearch backgroundColor="#e1e1e1" iconColor="#666" buttonColor="#4078c0"/>
+        <View style={styles.mainBar}>
+          <Select value={menuItems[this.state.value].value} menuItems={menuItems} sureButton={this._sureButton.bind(this)}/>
+          <MainSearch backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
+        </View>
         <List {...this.props} dataSource={datas}/>
       </View>
     )
@@ -75,5 +115,14 @@ const styles  = StyleSheet.create({
   content:{
     flex:1,
     backgroundColor:'#fff'
+  },
+  mainBar:{
+    height:44,
+    borderBottomWidth:1,
+    backgroundColor:'#e1e1e1',
+    borderBottomColor:'#d1d1d1',
+    paddingHorizontal:10,
+    flexDirection:'row',
+    alignItems:'center'
   }
 })

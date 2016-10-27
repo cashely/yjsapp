@@ -13,12 +13,11 @@ import reducer from './reducer/index';
 
 import Router from './components/router';
 var store = createStore(reducer);
-// 
+//
 
 class Index extends Component{
 
   render(){
-    console.log(Provider);
     return(
         <Provider store={store}><Router/></Provider>
     )

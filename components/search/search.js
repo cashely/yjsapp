@@ -4,14 +4,16 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-export default class Search extends Component {
+import {connect} from 'react-redux';
+import List from '../index/index/list';
+class Search extends Component {
   constructor(props){
     super(props)
   }
   render(){
     return(
       <View style={styles.content}>
-        <Text>搜索</Text>
+        <List {...this.props} dataSource={this.props.search.datas}/>
       </View>
     )
   }
@@ -24,3 +26,10 @@ const styles = StyleSheet.create({
     flex:1
   }
 })
+
+function select(state){
+  return {
+    search:state.search
+  }
+}
+export default connect(select)(Search);

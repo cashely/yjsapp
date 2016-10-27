@@ -6,7 +6,19 @@ import {
 } from 'react-native';
 import MainSearch from '../common/mainSearch';
 import ImgList from '../common/imgList';
+import Select from '../common/select';
 export default class News extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      value:0
+    }
+  }
+  _sureButton(value){
+    this.setState({
+      value:value
+    })
+  }
   render(){
     const datas = [{
       type:'药品交易',
@@ -63,9 +75,41 @@ export default class News extends Component {
       time:'2016-08-09',
       imgUrl:'http://imgsrc.baidu.com/forum/pic/item/b90e7bec54e736d1c8ea234f9b504fc2d46269f8.jpg'
     }];
+    const menuItems = [
+      {
+        value:0,
+        text:'全部'
+      },
+      {
+        value:1,
+        text:'新闻资讯'
+      },{
+        value:2,
+        text:'行业聚焦'
+      },
+      {
+        value:3,
+        text:'医改动态'
+      },
+      {
+        value:4,
+        text:'专家评论'
+      },
+      {
+        value:5,
+        text:'中药饮片'
+      },
+      {
+        value:6,
+        text:'中心新闻'
+      }
+    ];
     return(
       <View style={styles.content}>
-        <MainSearch backgroundColor="#e1e1e1" iconColor="#666" buttonColor="#4078c0"/>
+        <View style={styles.mainBar}>
+          <Select value={menuItems[this.state.value].value} menuItems={menuItems} sureButton={this._sureButton.bind(this)}/>
+          <MainSearch backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
+        </View>
         <ImgList dataSource = {datas} {...this.props}/>
       </View>
     )
@@ -75,5 +119,14 @@ const styles  = StyleSheet.create({
   content:{
     flex:1,
     backgroundColor:'#fff'
+  },
+  mainBar:{
+    height:44,
+    borderBottomWidth:1,
+    backgroundColor:'#e1e1e1',
+    borderBottomColor:'#d1d1d1',
+    paddingHorizontal:10,
+    flexDirection:'row',
+    alignItems:'center'
   }
 })

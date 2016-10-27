@@ -10,16 +10,40 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class SearchHeader extends Component {
   constructor(props){
     super(props);
+    this.state={
+      value:''
+    }
+  }
+  _goBack(){
+    this.props.navigator.jumpBack();
   }
   render(){
     return(
       <View style={styles.content}>
         <View style={styles.inputContent}>
           <Icon style={styles.icon} name="search" size={14}/>
-          <TextInput autoFocus={true} placeholder="请输入搜索的关键词" placeholderTextColor="#e1e1e1" keyboardType="web-search" clearButtonMode="always" style={styles.input}/>
+          <TextInput
+            autoFocus={true}
+            placeholder="请输入搜索的关键词"
+            placeholderTextColor="#e1e1e1"
+            keyboardType="web-search"
+            clearButtonMode="always"
+            style={styles.input}
+            ref= {(ref)=> this._searchInput = ref}
+            onChangeText={
+              (text)=>{
+                this.setState({
+                  value:text
+                })
+              }
+            }
+            onSubmitEditing={()=>{
+              this.props.searchAction(this.state.value);
+            }}
+          />
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>搜索</Text>
+        <TouchableOpacity style={styles.button} onPress={this._goBack.bind(this)}>
+          <Text style={styles.buttonText}>取消</Text>
         </TouchableOpacity>
       </View>
     )

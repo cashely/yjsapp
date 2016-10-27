@@ -7,7 +7,7 @@ import {
   Navigator,
   TouchableOpacity
 } from 'react-native';
-
+import {connect} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from 'react-native-drawer';
@@ -21,7 +21,15 @@ import Search from './search/search';
 import SearchHeader from './search/searchHeader';
 
 
-export default class Router extends Component {
+class Router extends Component {
+
+  constructor(props){
+    super(props);
+    console.log(this,'proute');
+    this.state={
+      searchData:[]
+    }
+  }
   componentDidMount(){
 
   }
@@ -29,13 +37,76 @@ export default class Router extends Component {
 
   _toggleDrawer(){
     this._drawer.open();
-    console.log(this._drawer.getHeight());
   }
+
+  _searchAction(searchString){
+    const data = [{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:true,
+      time:'2016-08-01'
+    },{
+      type:'医用耗材',
+      title:'一期医用耗材生产企业报名系统操作培训的通知',
+      isNew:true,
+      time:'2016-08-02'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-03'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-04'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-05'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-06'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-07'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-08'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-09'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-09'
+    },{
+      type:'药品交易',
+      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
+      isNew:false,
+      time:'2016-08-09'
+    }];
+    this.props.dispatch({
+      type:'SEARCH',
+      datas:data
+    });
+  }
+
   _searchHandle(navigator){
     navigator.push({
       component:Search,
       name:'search',
-      title:SearchHeader
+      title:()=> (<SearchHeader searchAction={this._searchAction.bind(this)} navigator={navigator}/>)
     });
   }
   render() {
@@ -60,10 +131,11 @@ export default class Router extends Component {
              },
            Title: (route, navigator, index, navState) =>
              {
+               console.log(typeof route.title);
                 if(typeof route.title == 'string'){
                   return (<View style={styles.title}><Text style={styles.titleText} numberOfLines={1}>{route.title}</Text></View>);
                 }else if(typeof route.title == 'function'){
-                  return <route.title/>;
+                  return route.title();
                 }else{
                   return (<View style={styles.title}><Text style={styles.titleText}>广东省药品交易中心</Text></View>)
                 }
@@ -76,16 +148,23 @@ export default class Router extends Component {
 
     return (
       <Drawer
-        type="displace"
+        type="overlay"
         content={<Menu/>}
         panCloseMask={0.2}
-        openDrawerOffset={100}
         openDrawerOffset={0.5}
+        tapToClose={true}
+        closedDrawerOffset={-3}
         ref={(ref)=> this._drawer = ref}
         tweenHandler={(ratio) => ({
-          main: { opacity:(2-ratio)/2 }
+          main: { opacity:(2-ratio)/2}
         })}
-      >
+        styles={
+          {
+            drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
+            main: {paddingLeft: 3}
+          }
+          }
+        >
         <Navigator
           initialRoute = {{
             name:'defaultRuote',
@@ -116,7 +195,7 @@ export default class Router extends Component {
             }
 
           }
-          style={{flex:1}}
+          style={{flex:1,backgroundColor:'#fff'}}
         />
         </Drawer>
     );
@@ -124,6 +203,9 @@ export default class Router extends Component {
 }
 
 const styles = StyleSheet.create({
+  drawer:{
+    backgroundColor:'blue'
+  },
   titleBar:{
     flex:1,
     backgroundColor:'#4078c0',
@@ -147,3 +229,9 @@ const styles = StyleSheet.create({
     flex:1
   }
 })
+function select(state){
+  return {
+    index:state.index
+  }
+}
+export default connect(select)(Router);

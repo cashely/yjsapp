@@ -14,19 +14,12 @@ export default class Notice extends Component {
   constructor(props){
     super(props);
     this.state={
-      isVisible:false
+      value:0
     }
-
   }
   _sureButton(value){
-
     this.setState({
-      isVisible:false
-    });
-  }
-  _cancelButton(){
-    this.setState({
-      isVisible:false
+      value:value
     })
   }
   render(){
@@ -84,14 +77,38 @@ export default class Notice extends Component {
       time:'2016-08-09',
       imgUrl:'http://img3.imgtn.bdimg.com/it/u=4284362590,246341097&fm=21&gp=0.jpg'
     }];
+    const menuItems = [
+      {
+        value:0,
+        text:'全部'
+      },
+      {
+        value:1,
+        text:'实时动态'
+      },{
+        value:2,
+        text:'药品交易'
+      },
+      {
+        value:3,
+        text:'医用耗材'
+      },
+      {
+        value:4,
+        text:'医疗设备'
+      },
+      {
+        value:5,
+        text:'中药饮片'
+      }
+    ];
     return(
       <View style={styles.content}>
-        <Select value={"1"} isVisible={this.state.isVisible} sureButton={this._sureButton.bind(this)} cancelButton={this._cancelButton.bind(this)}/>
-        <MainSearch backgroundColor="#e1e1e1" iconColor="#666" buttonColor="#4078c0"/>
+        <View style={styles.mainBar}>
+          <Select value={menuItems[this.state.value].value} menuItems={menuItems} sureButton={this._sureButton.bind(this)}/>
+          <MainSearch backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
+        </View>
         <List {...this.props} dataSource={datas}/>
-        <TouchableOpacity onPress={()=>{this.setState({isVisible:true})}}>
-          <Text>打开</Text>
-        </TouchableOpacity>
       </View>
     )
   }
@@ -101,5 +118,14 @@ const styles  = StyleSheet.create({
   content:{
     flex:1,
     backgroundColor:'#fff'
+  },
+  mainBar:{
+    height:44,
+    borderBottomWidth:1,
+    backgroundColor:'#e1e1e1',
+    borderBottomColor:'#d1d1d1',
+    paddingHorizontal:10,
+    flexDirection:'row',
+    alignItems:'center'
   }
 })
