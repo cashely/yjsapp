@@ -21,9 +21,11 @@ export default class ImgList extends Component {
     console.log(ele.imgUrl);
     return(
       <View style={styles.content}>
-        <View style={styles.left}>
-          <Image source={{uri:ele.imgUrl}} style={styles.image}/>
-        </View>
+        {
+          ele.imgUrl ? <View style={styles.left}>
+            <Image source={{uri:ele.imgUrl}} style={styles.image}/>
+          </View> : null
+        }
         <View style={styles.right}>
           <Text style={styles.text}>
             <Text style={styles.tag}>[{ele.type}]</Text>

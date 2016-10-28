@@ -9,10 +9,9 @@ import {
   TextInput,
   Dimensions
 } from 'react-native';
-import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
+import {connect} from 'react-redux';
 
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 

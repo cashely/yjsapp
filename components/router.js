@@ -25,7 +25,6 @@ class Router extends Component {
 
   constructor(props){
     super(props);
-    console.log(this,'proute');
     this.state={
       searchData:[]
     }
@@ -37,6 +36,9 @@ class Router extends Component {
 
   _toggleDrawer(){
     this._drawer.open();
+  }
+  _colseDrawer(){
+    this._drawer.close();
   }
 
   _searchAction(searchString){
@@ -109,6 +111,16 @@ class Router extends Component {
       title:()=> (<SearchHeader searchAction={this._searchAction.bind(this)} navigator={navigator}/>)
     });
   }
+
+  _navigate(route){
+    if(route){
+      this._navigator.push(route);
+    }else{
+      this._navigator.pop();
+    }
+    this._colseDrawer();
+
+  }
   render() {
     //控制导航条
     let $navBar = <Navigator.NavigationBar
@@ -131,7 +143,6 @@ class Router extends Component {
              },
            Title: (route, navigator, index, navState) =>
              {
-               console.log(typeof route.title);
                 if(typeof route.title == 'string'){
                   return (<View style={styles.title}><Text style={styles.titleText} numberOfLines={1}>{route.title}</Text></View>);
                 }else if(typeof route.title == 'function'){
@@ -149,7 +160,7 @@ class Router extends Component {
     return (
       <Drawer
         type="overlay"
-        content={<Menu/>}
+        content={<Menu navigate={this._navigate.bind(this)}/>}
         panCloseMask={0.2}
         openDrawerOffset={0.5}
         tapToClose={true}
@@ -166,6 +177,8 @@ class Router extends Component {
           }
         >
         <Navigator
+          ref={(ref)=>this._navigator = ref}
+          debugOverlay={false}
           initialRoute = {{
             name:'defaultRuote',
             component:Index,
@@ -193,7 +206,6 @@ class Router extends Component {
             (route,navigator)=>{
               return <route.component {...route} navigator = {navigator} />
             }
-
           }
           style={{flex:1,backgroundColor:'#fff'}}
         />
@@ -213,10 +225,12 @@ const styles = StyleSheet.create({
   },
   title:{
     flex:1,
+    overflow:'hidden',
     justifyContent:'center',
     flexWrap:'nowrap'
   },
   titleText:{
+    textAlign:'center',
     fontWeight:'bold',
     fontSize:16,
     color:'#fff'

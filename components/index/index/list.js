@@ -7,7 +7,8 @@ import {
   ListView
 } from 'react-native';
 import Single from '../../single/single';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NavigatorTitle from '../../common/navigatorTitle';
 export default class List extends Component{
 	constructor(props) {
 	  super(props);
@@ -19,11 +20,15 @@ export default class List extends Component{
 	  	dataSource:ds.cloneWithRows(ds)
 	  }
 	}
+
+  _goBack(){
+    this.props.navigator.pop();
+  }
   _linkHandle(title){
     this.props.navigator.push({
       component:Single,
       name:'single',
-      title:title
+      title:()=> (<NavigatorTitle goBack={this._goBack.bind(this)} isShare={true} isCollected={true} navigator={this.props.navigator} title={title}/>)
     })
   }
 
@@ -36,7 +41,7 @@ export default class List extends Component{
         onEndReachedThreshold={10}
         onEndReached={
           ()=>{
-            console.log('end');
+            // console.log('end');
           }
         }
         renderRow={

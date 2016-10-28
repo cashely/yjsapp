@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import List from '../index/index/list';
+
 class Search extends Component {
   constructor(props){
     super(props)
@@ -22,7 +23,6 @@ class Search extends Component {
 const styles = StyleSheet.create({
   content:{
     backgroundColor:'#fff',
-    paddingTop:64,
     flex:1
   }
 })
