@@ -12,6 +12,9 @@ import NavigatorTitle from './navigatorTitle';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Collect from '../collect/collect';
+import About from '../about/about';
+import Service from '../service/service';
+import FeedBack from '../feedBack/feedBack';
 export default class Drawer extends Component {
   constructor(props){
     super(props)
@@ -50,13 +53,37 @@ class Menu extends Component {
       leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
     })
   }
+  _aboutHandle(){
+    this.props.navigate({
+      component:About,
+      name:'about',
+      title:'关于我们',
+      leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
+    })
+  }
+  _serviceHandle(){
+    this.props.navigate({
+      component:Service,
+      name:'service',
+      title:'业务咨询',
+      leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
+    })
+  }
+  _feedBackHandle(){
+    this.props.navigate({
+      component:FeedBack,
+      name:'feedBack',
+      title:'意见反馈',
+      leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
+    })
+  }
   render(){
     return(
       <View style={styles.menu}>
           <TouchableOpacity onPress={this._collectHandle.bind(this)} style={styles.item}><Icon style={styles.icon} name="heart" size={20}/><Text style={styles.text}>我的收藏</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.item}><Icon style={styles.icon} name="question-circle" size={20}/><Text style={styles.text}>业务咨询</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.item}><Icon style={styles.icon} name="group" size={20}/><Text style={styles.text}>关于我们</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.item}><Icon style={styles.icon} name="pencil-square" size={20}/><Text style={styles.text}>意见反馈</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this._serviceHandle.bind(this)} style={styles.item}><Icon style={styles.icon} name="question-circle" size={20}/><Text style={styles.text}>业务咨询</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this._aboutHandle.bind(this)} style={styles.item}><Icon style={styles.icon} name="group" size={20}/><Text style={styles.text}>关于我们</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this._feedBackHandle.bind(this)} style={styles.item}><Icon style={styles.icon} name="pencil-square" size={20}/><Text style={styles.text}>意见反馈</Text></TouchableOpacity>
       </View>
     )
   }
