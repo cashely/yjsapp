@@ -5,30 +5,45 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class FeedBack extends Component {
+  constructor(props){
+    super(props);
+  }
   render(){
     return(
-      <View style={styles.content}>
-
+      <KeyboardAvoidingView behavior='padding' style={styles.content}>
+        <View keyboardShouldPersistTaps={true} style={styles.main}>
+          <ScrollView style={{flex:1}}>
+            <Text>sdsd</Text>
+            <TouchableOpacity>
+              <Text>sdsd</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
         <View style={styles.inputContent}>
           <View style={styles.inputWrap}>
             <Icon name="edit" size={15} color="#d1d1d1" style={styles.inputIcon}/>
             <TextInput
+              multiline={false}
+              blurOnSubmit={false}
               style={styles.inputText}
               autoFocus={true}
               placeholder="请输入搜索的关键词"
               placeholderTextColor="#e1e1e1"
               keyboardType="web-search"
               clearButtonMode="always"
-              ref= {(ref)=> this._searchInput = ref}
               onChangeText={
                 (text)=>{
                   console.log(1);
                 }
               }
+              onBlur={()=>{
+                console.log('blur');
+              }}
               onSubmitEditing={()=>{
                 console.log(2);
               }}
@@ -40,7 +55,7 @@ export default class FeedBack extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -77,7 +92,8 @@ const styles = StyleSheet.create({
   },
   inputText:{
     flex:1,
-    height:30
+    height:30,
+    fontSize:14
   },
   button:{
     padding:10,
