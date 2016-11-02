@@ -185,7 +185,7 @@ class Router extends Component {
             title:'广东省药品交易中心',
             leftButton:
               (route)=>{
-                return <TouchableOpacity onPress={this._toggleDrawer.bind(this)} style={styles.buttonMenu}><Icon name="list-ul" size={20} color="#fff"/></TouchableOpacity>
+                return <TouchableOpacity onPress={this._toggleDrawer.bind(this)} style={styles.buttonMenu}><Icon name="user" size={20} color="#fff"/></TouchableOpacity>
               },
             rightButton:
               (route,navigator)=>{
