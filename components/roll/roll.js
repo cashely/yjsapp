@@ -28,7 +28,8 @@ class Roll extends Component {
       type:'RESET_ROLL'
     })
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadBid();

@@ -44,7 +44,8 @@ class Notice extends Component {
       type:'RESET_NOTICE'
     });
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadNotice();
@@ -59,12 +60,10 @@ class Notice extends Component {
   }
   //读取数据
   _loadNotice = () => {
-    this.setState({
-      is_loading:true
-    });
     if(!this.state.infinite) return false;
     this.setState({
-      infinite:false
+      infinite:false,
+      is_loading:true
     });
     ajaxMethod('wpPosts/getWpPostsList',{
       searchName:this.state.searchString,

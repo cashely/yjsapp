@@ -28,7 +28,8 @@ class Train extends Component {
       type:'RESET_TRAIN'
     });
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadTrain();
@@ -37,7 +38,8 @@ class Train extends Component {
   //搜索执行方法
   _searchHandle = (string) => {
     this.setState({
-      searchString:string
+      searchString:string,
+      infinite:true
     });
     this._reset();
   }

@@ -26,7 +26,8 @@ class Bid extends Component {
       type:'RESET_BID'
     });
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadBid();
@@ -35,7 +36,8 @@ class Bid extends Component {
   //搜索执行方法
   _searchHandle = (string) => {
     this.setState({
-      searchString:string
+      searchString:string,
+      infinite:true
     });
     this._reset();
   }

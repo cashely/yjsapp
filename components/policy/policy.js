@@ -31,7 +31,8 @@ class Policy extends Component {
       id:value
     });
     this.setState({
-      searchType:this.props.policy.menus[value].id
+      searchType:this.props.policy.menus[value].id,
+      infinite:true
     });
     this._reset();
   }
@@ -41,7 +42,8 @@ class Policy extends Component {
       type:'RESET_POLICY'
     });
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadPolicy();

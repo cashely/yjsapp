@@ -30,7 +30,8 @@ class News extends Component {
       id:value
     });
     this.setState({
-      searchType:this.props.news.menus[value].id
+      searchType:this.props.news.menus[value].id,
+      infinite:true
     });
     this._reset();
   }
@@ -40,7 +41,8 @@ class News extends Component {
       type:'RESET_NEWS'
     });
     this.setState({
-      pageNo:1
+      pageNo:1,
+      infinite:true
     });
     setTimeout(()=>{
       this._loadNews();
