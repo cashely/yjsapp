@@ -2,111 +2,121 @@ import React,{Component} from 'react';
 import {
   View,
   Text,
+  InteractionManager,
   StyleSheet
 } from 'react-native';
 import MainSearch from '../common/mainSearch';
-import List from '../index/index/list';
+import List from '../common/imgList';
 import Select from '../common/select';
-export default class Policy extends Component {
+import Loading from '../common/loading';
+import {connect} from 'react-redux';
+import {ajaxMethod} from '../../actions/ajax';
+
+class Policy extends Component {
   constructor(props){
     super(props);
     this.state={
-      value:0
+      id:0,
+      pageNo:1,
+      searchString:'',
+      searchType:0,
+      name:'全部',
+      infinite:true,
+      is_loading:true
     }
   }
+  //确定选择分类
   _sureButton(value){
     this.setState({
-      value:value
+      id:value
+    });
+    this.setState({
+      searchType:this.props.policy.menus[value].id
+    });
+    this._reset();
+  }
+  //重置数据
+  _reset = () => {
+    this.props.dispatch({
+      type:'RESET_POLICY'
+    });
+    this.setState({
+      pageNo:1
+    });
+    setTimeout(()=>{
+      this._loadPolicy();
+    })
+  }
+  //搜索执行方法
+  _searchHandle = (string) => {
+    this.setState({
+      searchString:string
+    });
+    this._reset();
+  }
+  //读取数据
+  _loadPolicy = () => {
+    if(!this.state.infinite) return false;
+    this.setState({
+      infinite:false,
+      is_loading:true
+    });
+    ajaxMethod('wpPosts/getWpPostsList',{
+      searchName:this.state.searchString,
+      parentTeamId:16,
+      pageNo:this.state.pageNo,
+      teamId:this.state.searchType
+    }).then((res) => {
+      this.props.dispatch({
+        type:'LOAD_POLICY',
+        datas:res.datas
+      });
+      this.setState({
+        is_loading:false
+      });
+      setTimeout(()=>{
+        console.log(this.props.policy.datas.length>= res.totalSize);
+        if(this.props.policy.datas.length>= res.totalSize){
+          this.setState({
+            infinite:false
+          });
+        }else{
+          this.setState({
+            infinite:true,
+            pageNo:this.state.pageNo+1
+          })
+        }
+      })
+    })
+  }
+  //读取小分类菜单
+  _loadFilterList = () => {
+    ajaxMethod('wpTerms/getWpTermsList',{
+      parentTeamId:16
+    }).then((res) => {
+      this.props.dispatch({
+        type:'LOAD_POLICY_MENU',
+        datas:res.datas
+      })
+    })
+  }
+  componentDidMount(){
+    InteractionManager.runAfterInteractions(() => {
+      this._loadFilterList();
+      this._loadPolicy();
     })
   }
   render(){
-    const datas = [{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:true,
-      time:'2016-08-01',
-      imgUrl:'http://g.hiphotos.baidu.com/zhidao/pic/item/a71ea8d3fd1f413491fb9cbe271f95cad0c85e25.jpg'
-    },{
-      type:'医用耗材',
-      title:'一期医用耗材生产企业报名系统操作培训的通知',
-      isNew:true,
-      time:'2016-08-02',
-      imgUrl:'http://h.hiphotos.baidu.com/zhidao/pic/item/29381f30e924b8994ef979bd6e061d950b7bf66a.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-03',
-      imgUrl:'http://pic.baike.soso.com/p/20140514/20140514092502-89274376.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-04',
-      imgUrl:'http://upload.cccnews.com.cn/2014/1124/1416814817316.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-05',
-      imgUrl:'http://att.bbs.duowan.com/forum/201307/11/150628rtjmtk2cjtij8x2m.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-06',
-      imgUrl:'http://img5.pcpop.com/ArticleImages/picshow/0x0/20110620/2011062017385043637.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-07',
-      imgUrl:'http://i-7.vcimg.com/trim/3e9cb413e355e3d2e35a28b2d9bfb2fb232003/trim.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-08',
-      imgUrl:'http://www.cdsoso.org/images/w/EeKTdmww.jpg'
-    },{
-      type:'药品交易',
-      title:'01607基本药物及非基本药物医保目录交易品种竞价结果的通知',
-      isNew:false,
-      time:'2016-08-09',
-      imgUrl:'http://imgsrc.baidu.com/forum/pic/item/b90e7bec54e736d1c8ea234f9b504fc2d46269f8.jpg'
-    }];
-    const menuItems = [
-      {
-        value:0,
-        text:'全部'
-      },
-      {
-        value:1,
-        text:'政策法规'
-      },{
-        value:2,
-        text:'国家法规'
-      },
-      {
-        value:3,
-        text:'广东法规'
-      },
-      {
-        value:4,
-        text:'交易规则'
-      },
-      {
-        value:5,
-        text:'政策解读'
-      }
-    ];
     return(
       <View style={styles.content}>
-        <View style={styles.mainBar}>
-          <Select value={menuItems[this.state.value].value} menuItems={menuItems} sureButton={this._sureButton.bind(this)}/>
-          <MainSearch backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
-        </View>
-        <List {...this.props} dataSource={datas}/>
+          <View style={styles.mainBar}>
+            {
+                !!this.props.policy.menus.length ? <Select value={this.state.id} menuItems={this.props.policy.menus} sureButton={this._sureButton.bind(this)}/> : null
+            }
+            <MainSearch searchHandle={this._searchHandle} backgroundColor="#fff" iconColor="#666" buttonColor="#4078c0"/>
+          </View>
+          <List loadHandle={this._loadPolicy}  {...this.props} dataSource={this.props.policy.datas}/>
+          <Loading isVisible={this.state.is_loading}/>
       </View>
     )
   }
@@ -126,3 +136,10 @@ const styles  = StyleSheet.create({
     alignItems:'center'
   }
 })
+select = (state) => {
+  return{
+    policy:state.policy
+  }
+}
+
+export default connect(select)(Policy);

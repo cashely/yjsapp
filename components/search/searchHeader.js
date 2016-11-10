@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import NavigatorBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class SearchHeader extends Component {
   constructor(props){
@@ -13,10 +14,16 @@ export default class SearchHeader extends Component {
     this.state={
       value:''
     }
+    this.state={
+      infinite:true,
+      pageNo:1
+    }
+
   }
   _goBack(){
-    this.props.navigator.jumpBack();
+    this.props.navigator.pop();
   }
+
   render(){
     return(
       <View style={styles.content}>
@@ -24,6 +31,7 @@ export default class SearchHeader extends Component {
           <Icon style={styles.icon} name="search" size={14}/>
           <TextInput
             autoFocus={true}
+            underlineColorAndroid="transparent"
             placeholder="请输入搜索的关键词"
             placeholderTextColor="#e1e1e1"
             keyboardType="web-search"
@@ -37,8 +45,8 @@ export default class SearchHeader extends Component {
                 })
               }
             }
-            onSubmitEditing={()=>{
-              this.props.searchAction(this.state.value);
+            onSubmitEditing={(event,text)=>{
+              this.props.searchAction(event.nativeEvent.text);
             }}
           />
         </View>
@@ -63,15 +71,17 @@ const styles = StyleSheet.create({
   },
   inputContent:{
     flex:1,
-    paddingVertical:5,
     backgroundColor:'#3869A7',
     borderRadius:3,
+    padding:0,
     flexDirection:'row',
     alignItems:'center'
   },
   input:{
     flex:1,
-    height:25,
+    padding:0,
+    height:30,
+    justifyContent:'center',
     color:'#fff',
     fontSize:14
   },

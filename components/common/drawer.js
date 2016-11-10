@@ -9,10 +9,11 @@ import {
 
 import {elementScale,elementHeight} from './functions';
 import NavigatorTitle from './navigatorTitle';
+import {httpAddress} from '../../config/index';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Collect from '../collect/collect';
-import About from '../about/about';
+import Page from '../page/page';
 import Service from '../service/service';
 import FeedBack from '../feedBack/feedBack';
 export default class Drawer extends Component {
@@ -55,8 +56,9 @@ class Menu extends Component {
   }
   _aboutHandle(){
     this.props.navigate({
-      component:About,
+      component:Page,
       name:'about',
+      uri:`${httpAddress}wpPosts/getAboutUs`,
       title:'关于我们',
       leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
     })
@@ -71,8 +73,9 @@ class Menu extends Component {
   }
   _feedBackHandle(){
     this.props.navigate({
-      component:FeedBack,
+      component:Page,
       name:'feedBack',
+      uri:`${httpAddress}wpPosts/feedBack`,
       title:'意见反馈',
       leftButton:()=> (<TouchableOpacity onPress={this._goBack.bind(this)} style={styles.buttonMenu}><Icon name="angle-left" size={30} color="#fff"/></TouchableOpacity>)
     })
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
     color:'#fff',
     fontSize:elementScale(16),
     fontWeight:'bold',
-    lineHeight:elementScale(28),
+    lineHeight:28,
     textAlign:'center'
   },
   menu:{

@@ -14,21 +14,23 @@ export default class Select extends Component {
     super(props);
     this.state={
       value:this.props.value,
-      isVisible:false
+      isVisible:false,
+      index:this.props.value
     }
   }
   _sureButton(){
+    this.props.sureButton(this.state.index);
     this._hideModal();
-    this.props.sureButton(this.state.value);
-
   }
   _cancelButton(){
     this._hideModal();
   }
-  _onChangeValue(value,index){
-    console.log(index);
+  _onChangeValue = async (value,index) => {
     this.setState({
-      value:index
+      value: await value
+    });
+    this.setState({
+      index:index
     })
   }
   _hideModal(){
@@ -44,6 +46,7 @@ export default class Select extends Component {
           transparent={true}
           visible={this.state.isVisible}
           style={styles.modal}
+          onRequestClose={this._hideModal.bind(this)}
         >
           <View style={styles.bg}>
             <View style={styles.content}>
@@ -62,8 +65,8 @@ export default class Select extends Component {
                  selectedValue={this.state.value}
                 >
                   {
-                    this.props.menuItems.map((ele)=>{
-                      return <Picker.Item key={`${ele.value}${ele.value}`} value={ele.value} label={ele.text}/>
+                    Array.from(this.props.menuItems,(ele)=>{
+                      return <Picker.Item key={`${ele.value}${ele.value}`} value={ele.id} label={ele.name}/>
                     })
                   }
                 </Picker>
@@ -74,7 +77,7 @@ export default class Select extends Component {
         <View>
           <TouchableOpacity style={styles.selectContent} onPress={()=>{this.setState({isVisible:true})}}>
             <Icon name="filter" size={20} style={styles.selectIcon}/>
-            <Text style={styles.selectText}>{this.props.menuItems[this.props.value].text}</Text>
+            <Text style={styles.selectText}>{ (this.props.menuItems.length !=0) ? this.props.menuItems[this.props.value].name : null }</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -4,26 +4,37 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import Single from '../../single/single';
+import NavigatorTitle from '../../common/navigatorTitle';
 export default class Slider extends Component{
+  _linkHandle(title,id){
+    this.props.navigator.push({
+      component:Single,
+      name:'single',
+      id:id,
+      title:()=> (<NavigatorTitle goBack={this._goBack.bind(this)} isShare={true} isCollected={true} id={id} navigator={this.props.navigator} title={title}/>)
+    })
+  }
+  _goBack(){
+    this.props.navigator.pop();
+  }
   render(){
     return(
       <View>
         <Swiper style={styles.imagesBar} autoplay={true} showsPagination={true} height={150}>
-          <View style={styles.image}>
-            <Image source={{uri:'http://photo.enterdesk.com/2009-4-21/200901241609531378.png',width:Dimensions.get('window').width,height:150}}/>
-          </View>
-          <View style={styles.image}>
-            <Image source={{uri:'http://up.qqjia.com/z/17/tu17742_2.jpg',width:Dimensions.get('window').width,height:150}}/>
-          </View>
-          <View style={styles.image}>
-            <Image source={{uri:'http://image.yy.com/yywebalbumbs2bucket/1b760f2692ca49ba83d261d071fd2928_1467605341514.png',width:Dimensions.get('window').width,height:150}}/>
-          </View>
-          <View style={styles.image}>
-            <Image source={{uri:'http://pic28.nipic.com/20130424/11588775_115415688157_2.jpg',width:Dimensions.get('window').width,height:150}}/>
-          </View>
+          {
+            Array.from(this.props.dataSource,(ele)=>{
+              return (
+                <TouchableOpacity key={`slider-${ele.id}`} onPress={this._linkHandle.bind(this,ele.postTitle,ele.id)} style={styles.image}>
+                  <Image source={{uri:`${ele.mainImg}`,width:Dimensions.get('window').width,height:150}}/>
+                </TouchableOpacity>
+              )
+            })
+          }
         </Swiper>
       </View>
     )
@@ -31,9 +42,9 @@ export default class Slider extends Component{
 }
 
 const styles = StyleSheet.create({
-
   image:{
-    flex:1
+    flex:1,
+    backgroundColor:'#d1d1d1'
   },
   imagesBar:{
 

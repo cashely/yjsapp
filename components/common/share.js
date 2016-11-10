@@ -20,6 +20,7 @@ export default class Share extends Component {
         animationType={'slide'}
         visible={this.props.isVisiable}
         transparent={true}
+        onRequestClose={this.props.hideHandle}
       >
         <View style={styles.content}>
           <View style={styles.cancelButton}>

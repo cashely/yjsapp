@@ -13,30 +13,45 @@ export default class List extends Component {
       rowHasChanged:(r1,r2) => r1!==r2
     });
     this.state= {
-      datas:ds
+      datas:ds,
+      isFirst:true
     }
   }
   _renderRow(ele){
-    if(ele.type === 'Q'){
       return (<View style={styles.q}>
                 <Text>
-                  <Text>问：{ele.content}</Text>
-                  <Text>{ele.time}</Text>
+                  <Text>问：{ele.postTitle}</Text>
+                  <Text>{ele.postDate}</Text>
                 </Text>
-              </View>)
-    }else{
-      return (<View style={styles.a}>
                 <Text>
-                  <Text>答：{ele.content}</Text>
+                  <Text>答：{ele.postContent}</Text>
                 </Text>
               </View>)
+  }
+  //需要加入此方法阻止事件第一次加载
+  _loadHandle = (a,b) => {
+    // console.log(a,b);
+    if(this.state.isFirst){
+      this.setState({
+        isFirst:false
+      });
+      return false;
+    }else{
+      this.props.loadHandle();
     }
+
   }
   render(){
     return(
       <ListView
+        initialListSize={1}
         renderRow={this._renderRow.bind(this)}
         dataSource={this.state.datas.cloneWithRows(this.props.dataSource)}
+        enableEmptySections={true}
+        onEndReached={
+            this._loadHandle
+        }
+        onEndReachedThreshold={0}
       />
     )
   }

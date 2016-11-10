@@ -16,7 +16,21 @@ export default class SearchHeader extends Component {
       <View style={styles.content}>
         <View style={[styles.inputContent,{backgroundColor:this.props.backgroundColor}]}>
           <Icon style={[styles.icon,{color:this.props.iconColor}]} name="search" size={14}/>
-          <TextInput autoFocus={false} placeholder="请输入搜索的关键词" placeholderTextColor={this.props.iconColor ? this.props.iconColor : "#e1e1e1"} keyboardType="web-search" clearButtonMode="always" style={styles.input}/>
+          <TextInput
+            autoFocus={false}
+            underlineColorAndroid="transparent"
+            placeholder="请输入搜索的关键词"
+            placeholderTextColor={this.props.iconColor ? this.props.iconColor : "#e1e1e1"}
+            keyboardType="web-search"
+            clearButtonMode="always"
+            style={styles.input}
+            ref={(ref)=> this.searchInput = ref}
+            onSubmitEditing={
+              (event)=>{
+                this.props.searchHandle(event.nativeEvent.text);
+              }
+            }
+          />
         </View>
       </View>
     )
@@ -35,16 +49,18 @@ const styles = StyleSheet.create({
   },
   inputContent:{
     flex:1,
-    paddingVertical:8,
     backgroundColor:'#3869A7',
     borderRadius:3,
+    padding:0,
     flexDirection:'row',
     alignItems:'center'
   },
   input:{
     flex:1,
-    height:14,
-    color:'#fff',
+    padding:0,
+    height:30,
+    justifyContent:'center',
+    color:'#000',
     fontSize:14
   },
   button:{

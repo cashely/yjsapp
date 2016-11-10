@@ -4,8 +4,10 @@ import {
   Text,
   Image,
   StyleSheet,
-  ListView
+  ListView,
+  TouchableHighlight
 } from 'react-native';
+import LinkButton from './linkButton';
 export default class ImgList extends Component {
   constructor(props){
     super(props);
@@ -13,67 +15,40 @@ export default class ImgList extends Component {
       rowHasChanged:(r1,r2)=> r1 !== r2
     });
     this.state = {
-      datas : ds.cloneWithRows([])
+      datas : ds,
+      isFirst:true
     }
   }
+  //需要加入此方法阻止事件第一次加载
+  _loadHandle = (a) => {
+    // console.log(a);
+    if(this.state.isFirst){
+      this.setState({
+        isFirst:false
+      });
+      return false;
+    }else{
+      this.props.loadHandle();
+    }
 
+  }
   _renderRow(ele){
-    console.log(ele.imgUrl);
     return(
-      <View style={styles.content}>
-        {
-          ele.imgUrl ? <View style={styles.left}>
-            <Image source={{uri:ele.imgUrl}} style={styles.image}/>
-          </View> : null
-        }
-        <View style={styles.right}>
-          <Text style={styles.text}>
-            <Text style={styles.tag}>[{ele.type}]</Text>
-            <Text>{ele.title}</Text>
-          </Text>
-          <Text style={styles.time}>{ele.time}</Text>
-        </View>
-      </View>
+      <LinkButton navigator={this.props.navigator} ele={ele}/>
     )
   }
   render(){
     return(
         <ListView
+          initialListSize={1}
           dataSource={this.state.datas.cloneWithRows(this.props.dataSource)}
           renderRow={(ele)=>this._renderRow(ele)}
+          enableEmptySections={true}
+          onEndReached={
+              this._loadHandle
+          }
+          onEndReachedThreshold={0}
         />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  content:{
-    flexDirection:'row',
-    alignItems:'center',
-    padding:10,
-    borderBottomWidth:1,
-    borderColor:'#d1d1d1'
-  },
-  left:{
-    width:80,
-    height:80
-  },
-  right:{
-    flex:1,
-    marginLeft:10
-  },
-  text:{
-    flex:1,
-    justifyContent:'flex-start'
-  },
-  tag:{
-    color:'red'
-  },
-  time:{
-    textAlign:'right'
-  },
-  image:{
-    width:80,
-    height:80
-  }
-})
