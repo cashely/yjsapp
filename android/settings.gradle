@@ -1,3 +1,5 @@
 rootProject.name = 'yjsapp'
 
 include ':app'
+include ':react-native-qq'
+project(':react-native-qq').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-qq/android')

@@ -9,11 +9,32 @@ import {
   Dimensions,
   StyleSheet
 } from 'react-native';
+// var QQAPI = require('react-native-qq');
+// import * as QQAPI from 'react-native-qq';
 export default class Share extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      shareInfo:{
+        type: 'news',
+        title: 'sdsd',
+        description: 'description',
+        webpageUrl: 'www.baidu.com',
+        imageUrl:'www.baidu.com'
+      }
+    }
   }
-
+  _shareQQ = () => {
+    var d = {
+      type: 'news',
+      title: 'sdsd',
+      description: 'description',
+      webpageUrl: 'www.baidu.com',
+      imageUrl:'www.baidu.com'
+    }
+  }
+  _shareQQZone = () => {
+  }
   render(){
     return(
       <Modal
@@ -29,10 +50,10 @@ export default class Share extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.buttonGroup}>
-            <Button text="qq" imgUrl="http://pic2.cxtuku.com/00/15/13/b293a6b880cd.jpg"/>
-            <Button text="qq空间" imgUrl="http://imgsrc.baidu.com/baike/pic/item/a8773912b31bb0515019d822327adab44aede0ff.jpg"/>
-            <Button text="微信好友" imgUrl="http://www.come8000.com/UpFile/localhost/b/2013-11-12/13842348656EB6KDe7BqqKG7n.jpg"/>
-            <Button text="朋友圈" imgUrl="http://lywb.lyd.com.cn/images/2014-05/07/1399418216687cls455_b.jpg"/>
+            <Button text="qq" action={this._shareQQ} imgUrl="http://pic2.cxtuku.com/00/15/13/b293a6b880cd.jpg"/>
+            <Button text="qq空间" action={this._shareQQZone} imgUrl="http://imgsrc.baidu.com/baike/pic/item/a8773912b31bb0515019d822327adab44aede0ff.jpg"/>
+            <Button text="微信好友" action={this._shareQQ} imgUrl="http://www.come8000.com/UpFile/localhost/b/2013-11-12/13842348656EB6KDe7BqqKG7n.jpg"/>
+            <Button text="朋友圈" action={this._shareQQ} imgUrl="http://lywb.lyd.com.cn/images/2014-05/07/1399418216687cls455_b.jpg"/>
           </View>
         </View>
       </Modal>
@@ -42,7 +63,7 @@ export default class Share extends Component {
 class Button extends Component {
   render(){
     return(
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={this.props.action} style={styles.button}>
         <Image source={{uri:this.props.imgUrl}} style={styles.image}/>
         <Text style={styles.text}>{this.props.text}</Text>
       </TouchableOpacity>

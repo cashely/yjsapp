@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NavigatorBar from 'react-native-navbar';
 
 import Search from '../search/search';
+
 export default class NavigatorHeader extends Component {
 
 
