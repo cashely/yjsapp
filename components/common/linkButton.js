@@ -6,24 +6,29 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import NavigatorTitle from '../common/navigatorTitle';
+
 import Single from '../single/single';
 export default class LinkButton extends Component {
   _goBack(){
     this.props.navigator.pop();
   }
-  _linkHandle(title,id){
+  _linkHandle(title,id,postExcerpt){
     this.props.navigator.push({
       component:Single,
       name:'single',
       id:id,
-      title:()=> (<NavigatorTitle goBack={this._goBack.bind(this)} isShare={true} isCollected={true} id={id} navigator={this.props.navigator} title={title}/>)
+      goBack:this._goBack.bind(this),
+      isShare:true,
+      isCollected:true,
+      navigator:this.props.navigator,
+      title:title,
+      postExcerpt:postExcerpt
     })
   }
   render(){
     return(
       <View style={styles.content}>
-        <TouchableHighlight style={styles.button} onPress={this._linkHandle.bind(this,this.props.ele.postTitle,this.props.ele.id)} underlayColor="#f5f5f5">
+        <TouchableHighlight style={styles.button} onPress={this._linkHandle.bind(this,this.props.ele.postTitle,this.props.ele.id,this.props.ele.postExcerpt)} underlayColor="#f5f5f5">
           <View style={{flex:1}}>
             {
               this.props.ele.imgUrl ? <View style={styles.left}>

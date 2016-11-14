@@ -7,33 +7,59 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  ToastAndroid,
+  Alert
 } from 'react-native';
 // var QQAPI = require('react-native-qq');
 // import * as QQAPI from 'react-native-qq';
-export default class Share extends Component {
+import {httpAddress} from '../../config/index';
+var WeChat=require('react-native-wechat');
+export default class Sharea extends Component {
   constructor(props){
     super(props);
+    WeChat.registerApp('wx1197c17e466681b6');
     this.state = {
       shareInfo:{
         type: 'news',
-        title: 'sdsd',
-        description: 'description',
-        webpageUrl: 'www.baidu.com',
+        title: this.props.title,
+        description: this.props.description,
+        webpageUrl: `${httpAddress}wpPosts/getWpPostsdetail?id=${this.props.id}`,
         imageUrl:'www.baidu.com'
-      }
+      },
+      isInstallWX:false
+    }
+
+  }
+  _shareWx = async () => {
+    this.props.hideHandle();
+    try {
+      await WeChat.shareToSession(this.state.shareInfo)
+    } catch (e) {
+      ToastAndroid.show(e,ToastAndroid.SHORT);
+    }
+
+  }
+  _shareTimeLine = async () => {
+    try {
+      await WeChat.shareToTimeline(this.state.shareInfo).then((res) =>{
+        console.log(res);
+      })
+    } catch (e) {
+
     }
   }
-  _shareQQ = () => {
-    var d = {
-      type: 'news',
-      title: 'sdsd',
-      description: 'description',
-      webpageUrl: 'www.baidu.com',
-      imageUrl:'www.baidu.com'
+  componentDidMount(){
+    this.props.hideHandle();
+    try {
+      WeChat.isWXAppInstalled().then((res) => {
+        this.setState({
+          isInstallWX:true
+        })
+      })
+    } catch (e) {
+      ToastAndroid.show('分享错误',ToastAndroid.SHORT);
     }
-  }
-  _shareQQZone = () => {
   }
   render(){
     return(
@@ -50,10 +76,12 @@ export default class Share extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.buttonGroup}>
-            <Button text="qq" action={this._shareQQ} imgUrl="http://pic2.cxtuku.com/00/15/13/b293a6b880cd.jpg"/>
-            <Button text="qq空间" action={this._shareQQZone} imgUrl="http://imgsrc.baidu.com/baike/pic/item/a8773912b31bb0515019d822327adab44aede0ff.jpg"/>
-            <Button text="微信好友" action={this._shareQQ} imgUrl="http://www.come8000.com/UpFile/localhost/b/2013-11-12/13842348656EB6KDe7BqqKG7n.jpg"/>
-            <Button text="朋友圈" action={this._shareQQ} imgUrl="http://lywb.lyd.com.cn/images/2014-05/07/1399418216687cls455_b.jpg"/>
+            <Button style={styles.buttonShare} text="微信好友" action={this._shareWx}>
+              <Image source={require('../../static/images/icon-wx-60.png')} style={styles.image}/>
+            </Button>
+            <Button style={styles.buttonShare} text="朋友圈" action={this._shareTimeLine}>
+              <Image source={require('../../static/images/icon-timeLine-60.png')} style={styles.image}/>
+            </Button>
           </View>
         </View>
       </Modal>
@@ -64,7 +92,7 @@ class Button extends Component {
   render(){
     return(
       <TouchableOpacity onPress={this.props.action} style={styles.button}>
-        <Image source={{uri:this.props.imgUrl}} style={styles.image}/>
+        {this.props.children}
         <Text style={styles.text}>{this.props.text}</Text>
       </TouchableOpacity>
     )

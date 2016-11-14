@@ -91,13 +91,12 @@ export default class NavigatorTitle extends Component {
         </Text>
         <View style={styles.right}>
           {
-            this.props.isShare ? <ShareButton pressHandle={this._showModal.bind(this)}/> : null
+            this.props.isShare ? <ShareButton pressHandle={this.props.showShare}/> : null
           }
           {
             this.props.isCollected ? <CollectButton isCollected={this.state.isCollected} pressHandle={this._collectHandle.bind(this,this.props.id)}/> : null
           }
         </View>
-        <Share hideHandle={this._hideModal.bind(this)} isVisiable={this.state.isVisiable}/>
       </View>
     )
   }

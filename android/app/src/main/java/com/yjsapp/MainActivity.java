@@ -1,7 +1,6 @@
 package com.yjsapp;
 
 import com.facebook.react.ReactActivity;
-import cn.reactnative.modules.qq.QQPackage;
 
 public class MainActivity extends ReactActivity {
 

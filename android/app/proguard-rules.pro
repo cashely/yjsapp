@@ -60,6 +60,11 @@
 
 # okio
 
+#微信设置
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+
 -keep class sun.misc.Unsafe { *; }
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
