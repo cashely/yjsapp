@@ -12,11 +12,11 @@ import {
   Alert
 } from 'react-native';
 import {httpAddress} from '../../config/index';
-// import * as WeChat from 'react-native-wechat';
+import * as WeChat from 'react-native-wechat';
 export default class Sharea extends Component {
   constructor(props){
     super(props);
-    // WeChat.registerApp('wx1197c17e466681b6');
+    WeChat.registerApp('wx1197c17e466681b6');
     this.state = {
       shareInfo:{
         type: 'news',

@@ -7,6 +7,7 @@ import com.facebook.react.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.theweflex.react.WeChatPackage;
 import cl.json.RNSharePackage;
+import cn.jpush.reactnativejpush.JPushPackage;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -17,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+  private boolean SHUTDOWN_TOAST = false;
+  private boolean SHUTDOWN_LOG = false;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -29,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new WeChatPackage(),
-            new RNSharePackage()
+            new RNSharePackage(),
+            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
       );
     }
   };

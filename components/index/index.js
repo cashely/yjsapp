@@ -10,6 +10,7 @@ import {
   ToastAndroid,
   TextInput,
   BackAndroid,
+  Alert,
   InteractionManager,
   Dimensions
 } from 'react-native';
@@ -18,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import NavigatorHeader from '../common/navigatorHeader';
 import {connect} from 'react-redux';
+import JPushModule from 'jpush-react-native';
 
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import Search from '../search/search';
@@ -56,7 +58,18 @@ class Main extends Component {
     };
     this._isShowIntro = this._isShowIntro.bind(this);
   }
+  componentWillMount(){
+
+  }
   componentDidMount(){
+    JPushModule.initPush();
+    // JPushModule.getInfo((map)=>{
+    //   console.log(map,'jpush');
+    // });
+    JPushModule.getRegistrationID((id)=>{
+      Alert.alert('getRegistrationID',id);
+    })
+
     //此处需要设置从接口返回推广图片以后设置显示或者不显示
     // this.setState({
     //   advModal:true

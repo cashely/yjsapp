@@ -4,14 +4,14 @@ import {
 import {httpAddress} from '../config/index';
 
 export const ajaxMethod = (url,params={})=> {
-  console.log(params);
+  // console.log(params);
   return fetch(httpAddress + url +'?'+ JSON.stringify(params),{
     method:'POST',
     body:JSON.stringify(params)
   }).then((res)=>{
     return res.json()
   }).then(res =>{
-    console.log(res);
+    // console.log(res);
     if(res.state == 1){
       return new Promise((r) => r(res));
     }else{
