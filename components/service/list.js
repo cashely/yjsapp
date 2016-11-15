@@ -18,13 +18,15 @@ export default class List extends Component {
     }
   }
   _renderRow(ele){
-      return (<View style={styles.q}>
-                <Text>
-                  <Text>问：{ele.postTitle}</Text>
-                  <Text>{ele.postDate}</Text>
-                </Text>
-                <Text>
-                  <Text>答：{ele.postContent}</Text>
+      return (<View style={styles.line}>
+                <View style={{borderBottomWidth:1,borderBottomColor:'#d1d1d1'}}>
+                  <Text style={styles.q}>
+                    <Text>问：{ele.postTitle}</Text>
+                    <Text style={styles.time}>{ele.postDate}</Text>
+                  </Text>
+                </View>
+                <Text style={styles.a}>
+                  <Text>{ele.postContent}</Text>
                 </Text>
               </View>)
   }
@@ -57,15 +59,25 @@ export default class List extends Component {
   }
 }
 const styles = StyleSheet.create({
-  a:{
-    backgroundColor:'#f1f1f1',
-    padding:10,
-    marginLeft:10,
+  line:{
+    paddingLeft:10,
     borderBottomWidth:1,
     borderBottomColor:'#d1d1d1'
   },
   q:{
-    padding:10
+    color:'#333',
+    fontWeight:'bold',
+    paddingVertical:10
   },
+  a:{
+    color:'#696969',
+    paddingVertical:10,
+
+  },
+  time:{
+    fontWeight:'normal',
+    fontSize:10,
+    color:'#666'
+  }
 
 })

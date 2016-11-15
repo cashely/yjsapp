@@ -6,7 +6,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  StatusBar
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,12 +27,16 @@ export default class NavigatorHeader extends Component {
   shouldComponentUpdate(){
     return false;
   }
+  componentDidMount(){
+    StatusBar.setBarStyle('light-content',true);
+  }
   render(){
     return(
       <NavigatorBar
         leftButton= {
           <LeftButton {...this.props}/>
         }
+        tintColor="#4078c0"
         title={<Title {...this.props}/>}
         style={{backgroundColor:'#4078c0',flexDirection:'row',alignItems:'center'}}
         rightButton={<SearchButton {...this.props}/>}

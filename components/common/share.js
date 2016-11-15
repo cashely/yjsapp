@@ -11,14 +11,12 @@ import {
   ToastAndroid,
   Alert
 } from 'react-native';
-// var QQAPI = require('react-native-qq');
-// import * as QQAPI from 'react-native-qq';
 import {httpAddress} from '../../config/index';
-var WeChat=require('react-native-wechat');
+// import * as WeChat from 'react-native-wechat';
 export default class Sharea extends Component {
   constructor(props){
     super(props);
-    WeChat.registerApp('wx1197c17e466681b6');
+    // WeChat.registerApp('wx1197c17e466681b6');
     this.state = {
       shareInfo:{
         type: 'news',
