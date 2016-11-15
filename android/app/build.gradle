@@ -94,6 +94,10 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        manifestPlaceholders = [
+            JPUSH_APPKEY: "5090506c66d830d548121685", //在此替换你的APPKey
+            APP_CHANNEL: "developer-default"    //应用渠道号
+        ]
     }
 
     signingConfigs {
@@ -139,6 +143,7 @@ dependencies {
     compile project(':react-native-wechat')
     compile project(':react-native-share')
     compile fileTree(dir: "libs", include: ["*.jar"])
+    compile project(':jpush-react-native')
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
