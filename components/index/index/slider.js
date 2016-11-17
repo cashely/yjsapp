@@ -11,12 +11,17 @@ import Swiper from 'react-native-swiper';
 import Single from '../../single/single';
 import NavigatorTitle from '../../common/navigatorTitle';
 export default class Slider extends Component{
-  _linkHandle(title,id){
+  _linkHandle(title,id,postExcerpt){
     this.props.navigator.push({
       component:Single,
       name:'single',
       id:id,
-      title:()=> (<NavigatorTitle goBack={this._goBack.bind(this)} isShare={true} isCollected={true} id={id} navigator={this.props.navigator} title={title}/>)
+      goBack:this._goBack.bind(this),
+      isShare:true,
+      isCollected:true,
+      navigator:this.props.navigator,
+      title:title,
+      postExcerpt:postExcerpt
     })
   }
   _goBack(){
@@ -29,7 +34,7 @@ export default class Slider extends Component{
           {
             Array.from(this.props.dataSource,(ele)=>{
               return (
-                <TouchableOpacity key={`slider-${ele.id}`} onPress={this._linkHandle.bind(this,ele.postTitle,ele.id)} style={styles.image}>
+                <TouchableOpacity key={`slider-${ele.id}`} onPress={this._linkHandle.bind(this,ele.postTitle,ele.id,ele.postExcerpt)} style={styles.image}>
                   <Image source={{uri:`${ele.mainImg}`,width:Dimensions.get('window').width,height:150}}/>
                 </TouchableOpacity>
               )

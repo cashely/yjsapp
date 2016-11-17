@@ -40,17 +40,22 @@ class List extends Component{
   _goBack(){
     this.props.navigator.pop();
   }
-  _linkHandle(title,id){
+  _linkHandle(title,id,postExcerpt){
     this.props.navigator.push({
       component:Single,
       name:'single',
       id:id,
-      title:()=> (<NavigatorTitle goBack={this._goBack.bind(this)} isShare={true} isCollected={true} id={id} navigator={this.props.navigator} title={title}/>)
+      goBack:this._goBack.bind(this),
+      isShare:true,
+      isCollected:true,
+      navigator:this.props.navigator,
+      title:title,
+      postExcerpt:postExcerpt
     })
   }
   render(){
     return(
-      <TouchableOpacity style={styles.item} onPress={this._linkHandle.bind(this,this.props.dataSource.postTitle,this.props.dataSource.id)} underlayColor="#f5f5f5">
+      <TouchableOpacity style={styles.item} onPress={this._linkHandle.bind(this,this.props.dataSource.postTitle,this.props.dataSource.id,this.props.dataSource.postExcerpt)} underlayColor="#f5f5f5">
         <Image source={{uri:this.props.dataSource.mainImg}} style={styles.itemImg}/>
         <Text numberOfLines={2} style={styles.itemTitle}>{this.props.dataSource.postTitle}</Text>
         <Text style={styles.itemTime}>{this.props.dataSource.postDate}</Text>

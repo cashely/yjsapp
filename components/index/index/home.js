@@ -23,10 +23,10 @@ export default class Home extends Component{
   			<View style={styles.content}>
           <ScrollView>
   				    <Slider navigator={this.props.navigator} dataSource={this.props.index.slider}/>
-	            <Title changeTabHandle={this.props.changeTabHandle.bind(this,1)} title="通知公告"/>
+	            <Title changeTabHandle={() => {this.props.changeTabHandle(1)}} title="通知公告"/>
 	            <List {...this.props} dataSource={this.props.index.notice}/>
-              <News {...this.props} changeTabHandle={this.props.changeTabHandle.bind(this,2)} dataSource={this.props.index.news} title="新闻资讯"/>
-	            <Title  changeTabHandle={this.props.changeTabHandle.bind(this,3)} changeTabHandle={this.props.changeTabHandle} {...this.props} title="政策法规"/>
+              <News {...this.props} changeTabHandle={() => {this.props.changeTabHandle(2)}} dataSource={this.props.index.news} title="新闻资讯"/>
+	            <Title changeTabHandle={() => {this.props.changeTabHandle(4)}} title="政策法规"/>
 	            <List {...this.props} dataSource={this.props.index.policy}/>
           </ScrollView>
   			</View>

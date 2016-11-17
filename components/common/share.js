@@ -12,11 +12,11 @@ import {
   Alert
 } from 'react-native';
 import {httpAddress} from '../../config/index';
-// import * as WeChat from 'react-native-wechat';
+import * as WeChat from 'react-native-wechat';
 export default class Sharea extends Component {
   constructor(props){
     super(props);
-    // WeChat.registerApp('wx1197c17e466681b6');
+    WeChat.registerApp('wx1197c17e466681b6');
     this.state = {
       shareInfo:{
         type: 'news',
@@ -27,33 +27,44 @@ export default class Sharea extends Component {
       },
       isInstallWX:false
     }
-
+  }
+  _unInstallWx = () => {
+    if(!this.state.isInstallWX){
+        Alert.alert('您未安装微信，请安装以后重试');
+        return false;
+    }
   }
   _shareWx = async () => {
+    this._unInstallWx();
     this.props.hideHandle();
     try {
-      await WeChat.shareToSession(this.state.shareInfo)
+      await WeChat.shareToSession(this.state.shareInfo);
     } catch (e) {
-      ToastAndroid.show(e,ToastAndroid.SHORT);
+      console.log(e);
+      ToastAndroid.show(e.message,ToastAndroid.SHORT);
     }
 
   }
   _shareTimeLine = async () => {
+    this._unInstallWx();
+    this.props.hideHandle();
     try {
       await WeChat.shareToTimeline(this.state.shareInfo).then((res) =>{
         console.log(res);
       })
     } catch (e) {
-
+      ToastAndroid.show(e.message,ToastAndroid.SHORT);
     }
   }
   componentDidMount(){
     this.props.hideHandle();
     try {
       WeChat.isWXAppInstalled().then((res) => {
-        this.setState({
-          isInstallWX:true
-        })
+        if(res){
+          this.setState({
+            isInstallWX:true
+          });
+        }
       })
     } catch (e) {
       ToastAndroid.show('分享错误',ToastAndroid.SHORT);

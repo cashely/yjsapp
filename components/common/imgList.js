@@ -40,7 +40,7 @@ export default class ImgList extends Component {
   render(){
     return(
         <ListView
-          initialListSize={1}
+          initialListSize={5}
           dataSource={this.state.datas.cloneWithRows(this.props.dataSource)}
           renderRow={(ele)=>this._renderRow(ele)}
           enableEmptySections={true}

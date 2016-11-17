@@ -67,13 +67,13 @@ class Main extends Component {
     //   console.log(map,'jpush');
     // });
     JPushModule.getRegistrationID((id)=>{
-      Alert.alert('getRegistrationID',id);
+      console.log('getRegistrationID',id);
     });
 
     JPushModule.addReceiveOpenNotificationListener((map) => {
       console.log("Opening notification!");
       //自定义点击通知后打开某个 Activity，比如跳转到 pushActivity
-      console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id)
+      console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id);
       let extra = JSON.parse(map['cn.jpush.android.EXTRA']);
       if(extra.id){
         ajaxMethod('wpPosts/getWpPostsKeepList',{
@@ -84,7 +84,7 @@ class Main extends Component {
               component:Single,
               name:'single',
               id:extra.id,
-              goBack:this.props.navigator.pop(),
+              goBack:this.props.navigator.pop,
               isShare:true,
               isCollected:true,
               navigator:this.props.navigator,
@@ -205,6 +205,7 @@ class Main extends Component {
     })
   }
   _changeTabHandle = (num)=>{
+    console.log(num);
     this.setState({
       page:num
     })
