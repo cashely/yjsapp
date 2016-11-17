@@ -10,6 +10,7 @@ import {
   ToastAndroid,
   TextInput,
   BackAndroid,
+  Alert,
   InteractionManager,
   Dimensions
 } from 'react-native';
@@ -18,10 +19,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import NavigatorHeader from '../common/navigatorHeader';
 import {connect} from 'react-redux';
+import JPushModule from 'jpush-react-native';
 
 import ScrollableTabView,{ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import Search from '../search/search';
-
+import Single from '../single/single';
 import Home from './index/home';
 import Notice from '../notice/notice';
 import News from '../news/news';
@@ -56,7 +58,44 @@ class Main extends Component {
     };
     this._isShowIntro = this._isShowIntro.bind(this);
   }
+  componentWillMount(){
+
+  }
   componentDidMount(){
+    JPushModule.initPush();
+    // JPushModule.getInfo((map)=>{
+    //   console.log(map,'jpush');
+    // });
+    JPushModule.getRegistrationID((id)=>{
+      Alert.alert('getRegistrationID',id);
+    });
+
+    JPushModule.addReceiveOpenNotificationListener((map) => {
+      console.log("Opening notification!");
+      //自定义点击通知后打开某个 Activity，比如跳转到 pushActivity
+      console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id)
+      let extra = JSON.parse(map['cn.jpush.android.EXTRA']);
+      if(extra.id){
+        ajaxMethod('wpPosts/getWpPostsKeepList',{
+          postIds: JSON.stringify([extra.id])
+        }).then((res)=>{
+          if(res.datas.length !==0 ) {
+            this.props.navigator.push({
+              component:Single,
+              name:'single',
+              id:extra.id,
+              goBack:this.props.navigator.pop(),
+              isShare:true,
+              isCollected:true,
+              navigator:this.props.navigator,
+              title:res.datas[0].postTitle,
+              postExcerpt:res.datas[0].postExcerpt
+            })
+          }
+        })
+      }
+    });
+
     //此处需要设置从接口返回推广图片以后设置显示或者不显示
     // this.setState({
     //   advModal:true
@@ -83,6 +122,10 @@ class Main extends Component {
        }
        return true;
      });
+  }
+  componentWillMount(){
+    JPushModule.removeReceiveCustomMsgListener();
+    JPushModule.removeReceiveNotificationListener();
   }
   //退出应用
   _exitApp(){

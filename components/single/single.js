@@ -19,7 +19,6 @@ export default class Single extends Component {
   }
   _showShare = ()=> {
     console.log('asasas');
-    // Share.open(shareOptions);
     this.setState({
       visible:true
     });

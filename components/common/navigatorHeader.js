@@ -1,10 +1,10 @@
 import React,{
-  Component,
-  Platform
+  Component
 } from 'react';
 import {
   View,
   Text,
+  Platform,
   TouchableOpacity,
   StyleSheet,
   StatusBar
@@ -28,7 +28,7 @@ export default class NavigatorHeader extends Component {
     return false;
   }
   componentDidMount(){
-    StatusBar.setBarStyle('light-content',true);
+    if(Platform.OS == 'ios') StatusBar.setBarStyle('light-content',true);
   }
   render(){
     return(

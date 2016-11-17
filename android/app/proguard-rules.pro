@@ -59,8 +59,7 @@
 -dontwarn okhttp3.**
 
 # okio
-
-#微信设置
+# 微信混淆代码
 -keep class com.tencent.mm.sdk.** {
    *;
 }
@@ -69,8 +68,3 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
-
--dontwarn java.nio.file.Files
--dontwarn java.nio.file.Path
--dontwarn java.nio.file.OpenOption
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement

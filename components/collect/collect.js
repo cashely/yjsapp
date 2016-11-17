@@ -62,7 +62,7 @@ class Collect extends Component {
     })
   }
   componentWillUnmount(){
-    his.props.dispatch({
+    this.props.dispatch({
       type:'RESET_COLLECT'
     });
   }
