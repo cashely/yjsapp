@@ -5,9 +5,9 @@ import {httpAddress} from '../config/index';
 
 export const ajaxMethod = (url,params={})=> {
   console.log(params);
-  return fetch(httpAddress + url +'?'+ JSON.stringify(params),{
+  return fetch(httpAddress + url,{
     method:'POST',
-    body:JSON.stringify(params)
+    body:encodeURIComponent(encodeURIComponent(JSON.stringify(params)))
   }).then((res)=>{
     return res.json()
   }).then(res =>{

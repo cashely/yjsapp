@@ -15,6 +15,7 @@ import {
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ScrollTabBar from './index/scrollTabBar';
 
 
 import NavigatorHeader from '../common/navigatorHeader';
@@ -98,7 +99,7 @@ class Main extends Component {
 
     //此处需要设置从接口返回推广图片以后设置显示或者不显示
     // this.setState({
-    //   advModal:true
+      // advModal:true
     // });
     // this._isShowIntro();
     InteractionManager.runAfterInteractions(() => {
@@ -215,18 +216,18 @@ class Main extends Component {
       <View style={styles.content}>
         <NavigatorHeader isDrawer={true} isSearch={true} {...this.props} title="广东省药品交易中心"/>
         <ScrollableTabView
-          renderTabBar={() => <ScrollableTabBar style={{height:43}} tabStyle={{height:44}} />}
+          renderTabBar={() => <ScrollTabBar style={{height:60}} tabStyle={{height:44}} />}
           tabBarActiveTextColor="#4078c0"
           tabBarUnderlineStyle={{backgroundColor:'#4078c0'}}
           page={this.state.page}
         >
-          <Home changeTabHandle = {this._changeTabHandle} {...this.props} tabLabel="首页要闻"/>
-          <Notice {...this.props} tabLabel="通知公告"/>
-          <News {...this.props} tabLabel="新闻资讯"/>
-          <Bid {...this.props} tabLabel="中标公告"/>
-          <Policy {...this.props} tabLabel="政策法规"/>
-          <Roll {...this.props} tabLabel="非诚信名单"/>
-          <Train {...this.props} tabLabel="培训通知"/>
+          <Home changeTabHandle = {this._changeTabHandle} {...this.props} tabLabel={{name:"首页要闻",icon:'home',color:'#0083c6'}}/>
+          <Notice {...this.props} tabLabel={{name:"通知公告",icon:'notifications-active',color:'#ff5b26'}}/>
+          <News {...this.props} tabLabel={{name:"新闻资讯",icon:'speaker-notes',color:'#ff8922'}}/>
+          <Bid {...this.props} tabLabel={{name:"中标公告",icon:'assignment',color:'#4bc14b'}}/>
+          <Policy {...this.props} tabLabel={{name:"政策法规",icon:'account-balance',color:'#de5392'}}/>
+          <Roll {...this.props} tabLabel={{name:"非诚信名单",icon:'signal-cellular-no-sim',color:'#28afe1'}}/>
+          <Train {...this.props} tabLabel={{name:"培训通知",icon:'recent-actors',color:'#ff2748'}}/>
         </ScrollableTabView>
         <Adv isVisible={this.state.advModal} hideModal={this._hideModal.bind(this)} uri={this.state.uri}/>
         {

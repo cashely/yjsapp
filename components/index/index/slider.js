@@ -30,7 +30,7 @@ export default class Slider extends Component{
   render(){
     return(
       <View>
-        <Swiper style={styles.imagesBar} autoplay={true} showsPagination={true} height={150}>
+        <Swiper autoplayTimeout={4} style={styles.imagesBar} autoplay={true} showsPagination={true} height={150}>
           {
             Array.from(this.props.dataSource,(ele)=>{
               return (

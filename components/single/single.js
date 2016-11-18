@@ -42,7 +42,7 @@ export default class Single extends Component {
           scalesPageToFit={true}
           startInLoadingState={true}
         />
-        <Share isVisiable={this.state.visible} title={this.props.title} id={this.props.title} description={this.props.postExcerpt} hideHandle={this._onCancel.bind(this)} />
+        <Share isVisiable={this.state.visible} title={this.props.title} id={this.props.id} description={this.props.postExcerpt} hideHandle={this._onCancel.bind(this)} />
       </View>
     )
   }

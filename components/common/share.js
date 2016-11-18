@@ -16,14 +16,14 @@ import * as WeChat from 'react-native-wechat';
 export default class Sharea extends Component {
   constructor(props){
     super(props);
-    WeChat.registerApp('wx1197c17e466681b6');
+    
     this.state = {
       shareInfo:{
         type: 'news',
         title: this.props.title,
         description: this.props.description,
         webpageUrl: `${httpAddress}wpPosts/getWpPostsdetail?id=${this.props.id}`,
-        imageUrl:'www.baidu.com'
+        imageUrl:'http://120.25.95.211:8081/wp-content/uploads/logo.png'
       },
       isInstallWX:false
     }
