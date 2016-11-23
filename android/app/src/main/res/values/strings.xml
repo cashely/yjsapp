@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">eFxljae0DN4GBDHFCfOI_mKy21T4N1GHjNCbG</string>
     <string name="app_name">广东药交</string>
 </resources>

@@ -26,6 +26,7 @@ import Launch from './common/launch';
 
 //检查更新组件
 // import {checkIsUpdate} from './config/checkUpdate';
+// import codePush from 'react-native-code-push'
 
 class Router extends Component {
   constructor(props){
@@ -37,6 +38,7 @@ class Router extends Component {
 
   }
   componentDidMount(){
+    // codePush.sync();
     // checkIsUpdate();
     // WeChat.registerApp('wx1197c17e466681b6');
   }
