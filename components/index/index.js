@@ -11,8 +11,10 @@ import {
   TextInput,
   BackAndroid,
   Alert,
+  Platform,
   InteractionManager,
-  Dimensions
+  Dimensions,
+  NativeAppEventEmitter
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ScrollTabBar from './index/scrollTabBar';
@@ -63,39 +65,47 @@ class Main extends Component {
 
   }
   componentDidMount(){
-    JPushModule.initPush();
+    console.log(typeof JPushModule);
+
+    //仅仅android才需要初始化
+    if(Platform.OS === 'android'){
+        JPushModule.initPush();
+
+
+        JPushModule.addReceiveOpenNotificationListener((map) => {
+          console.log("Opening notification!");
+          //自定义点击通知后打开某个 Activity，比如跳转到 pushActivity
+          console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id);
+          let extra = JSON.parse(map['cn.jpush.android.EXTRA']);
+          if(extra.id){
+            ajaxMethod('wpPosts/getWpPostsKeepList',{
+              postIds: JSON.stringify([extra.id])
+            }).then((res)=>{
+              if(res.datas.length !==0 ) {
+                this.props.navigator.push({
+                  component:Single,
+                  name:'single',
+                  id:extra.id,
+                  goBack:this.props.navigator.pop,
+                  isShare:true,
+                  isCollected:true,
+                  navigator:this.props.navigator,
+                  title:res.datas[0].postTitle,
+                  postExcerpt:res.datas[0].postExcerpt
+                })
+              }
+            })
+          }
+        });
+    }
+    // JPushModule.getRegistrationID((id)=>{
+    //   console.log('getRegistrationID',id);
+    // });
+
     // JPushModule.getInfo((map)=>{
     //   console.log(map,'jpush');
     // });
-    JPushModule.getRegistrationID((id)=>{
-      console.log('getRegistrationID',id);
-    });
 
-    JPushModule.addReceiveOpenNotificationListener((map) => {
-      console.log("Opening notification!");
-      //自定义点击通知后打开某个 Activity，比如跳转到 pushActivity
-      console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id);
-      let extra = JSON.parse(map['cn.jpush.android.EXTRA']);
-      if(extra.id){
-        ajaxMethod('wpPosts/getWpPostsKeepList',{
-          postIds: JSON.stringify([extra.id])
-        }).then((res)=>{
-          if(res.datas.length !==0 ) {
-            this.props.navigator.push({
-              component:Single,
-              name:'single',
-              id:extra.id,
-              goBack:this.props.navigator.pop,
-              isShare:true,
-              isCollected:true,
-              navigator:this.props.navigator,
-              title:res.datas[0].postTitle,
-              postExcerpt:res.datas[0].postExcerpt
-            })
-          }
-        })
-      }
-    });
 
     //此处需要设置从接口返回推广图片以后设置显示或者不显示
     // this.setState({
@@ -125,8 +135,10 @@ class Main extends Component {
      });
   }
   componentWillMount(){
-    JPushModule.removeReceiveCustomMsgListener();
-    JPushModule.removeReceiveNotificationListener();
+    if(Platform.OS === 'android'){
+      JPushModule.removeReceiveCustomMsgListener();
+      JPushModule.removeReceiveNotificationListener();
+    }
   }
   //退出应用
   _exitApp(){

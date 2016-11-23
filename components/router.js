@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
-import * as WeChat from 'react-native-wechat';
+// import * as WeChat from 'react-native-wechat';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from 'react-native-drawer';
 
@@ -38,7 +38,7 @@ class Router extends Component {
   }
   componentDidMount(){
     // checkIsUpdate();
-    WeChat.registerApp('wx1197c17e466681b6');
+    // WeChat.registerApp('wx1197c17e466681b6');
   }
   _hideModal(){
     this.setState({
