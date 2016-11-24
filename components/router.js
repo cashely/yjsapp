@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native';
-// import * as WeChat from 'react-native-wechat';
+import * as WeChat from 'react-native-wechat';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Drawer from 'react-native-drawer';
 
@@ -24,9 +24,6 @@ import {ajaxMethod} from '../actions/ajax';
 
 import Launch from './common/launch';
 
-//检查更新组件
-// import {checkIsUpdate} from './config/checkUpdate';
-// import codePush from 'react-native-code-push'
 
 class Router extends Component {
   constructor(props){
@@ -38,9 +35,7 @@ class Router extends Component {
 
   }
   componentDidMount(){
-    // codePush.sync();
-    // checkIsUpdate();
-    // WeChat.registerApp('wx1197c17e466681b6');
+    WeChat.registerApp('wx1197c17e466681b6');
   }
   _hideModal(){
     this.setState({

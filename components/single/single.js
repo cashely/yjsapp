@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Platform,
   WebView
 } from 'react-native';
 import {httpAddress} from '../../config/index';
@@ -10,6 +11,8 @@ import NavigatorTitle from '../common/navigatorTitle';
 import Share from '../common/share';
 import NavigatorHeader from '../common/navigatorHeader';
 // import Share, {ShareSheet, Button} from 'react-native-share';
+
+import RNFetchBlob from 'react-native-fetch-blob';
 export default class Single extends Component {
   constructor(props){
     super(props);
@@ -28,6 +31,53 @@ export default class Single extends Component {
       visible:false
     });
   }
+
+  _getmineType(string){
+    let type;
+    switch (string) {
+      case 'pdf' : type = 'application/pdf'; break;
+      case 'xls' : case 'xlsx' : type = 'application/vnd.ms-excel'; break;
+      case 'doc' : case 'docx' : type = 'application/msword'; break;
+      default: type = undefined;
+    }
+    return type;
+  }
+
+  _subFileType(string){
+    console.log(string);
+    if(string.indexOf('.') == -1) return false;
+    let pointIndex = string.lastIndexOf('.')+1;
+    let lastString =  string.slice(pointIndex);
+    console.log(lastString,'3');
+    return lastString.toLowerCase();
+  }
+
+  _onNavigationStateChange = (navState) => {
+    if(Platform.OS !== 'android')
+    const android = RNFetchBlob.android
+    const url = navState.url;
+    console.log(url);
+    let fileType = this._subFileType(url);
+    console.log(fileType,'1');
+    fileType = this._getmineType(fileType);
+    console.log(fileType,'2');
+    if(fileType){
+      RNFetchBlob.config({
+        addAndroidDownloads : {
+          useDownloadManager : true,
+          title : decodeURIComponent(navState.url.slice(navState.url.lastIndexOf('/')+1,navState.url.lastIndexOf('.'))),
+          mime : fileType,
+          mediaScannable : true,
+          notification : true,
+        }
+      })
+      .fetch('GET', navState.url)
+      .then((res) => {
+          android.actionViewIntent(res.path(), fileType)
+      })
+    }
+
+  }
   render(){
 
     return(
@@ -41,6 +91,7 @@ export default class Single extends Component {
           automaticallyAdjustContentInsets={true}
           scalesPageToFit={true}
           startInLoadingState={true}
+          onNavigationStateChange={this._onNavigationStateChange}
         />
         <Share isVisiable={this.state.visible} title={this.props.title} id={this.props.id} description={this.props.postExcerpt} hideHandle={this._onCancel.bind(this)} />
       </View>

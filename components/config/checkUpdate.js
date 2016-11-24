@@ -1,52 +1,18 @@
-//pushy热更新
-import {
-  Alert
-} from 'react-native';
-import {
-  isFirstTime,
-  isRolledBack,
-  packageVersion,
-  currentVersion,
-  checkUpdate,
-  downloadUpdate,
-  switchVersion,
-  switchVersionLater,
-  markSuccess
-} from 'react-native-update';
-import _updateConfig from '../../update.json';
-const {appKey} = _updateConfig[Platform.OS];
-doUpdate = info => {
-  downloadUpdate(info).then(hash => {
-    Alert.alert('提示', '下载完毕,是否重启应用?', [
-      {text: '是', onPress: ()=>{switchVersion(hash);}},
-      {text: '否',},
-      {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
-    ]);
-  }).catch(err => {
-    Alert.alert('提示', '更新失败.');
-  });
-}
-export const checkIsUpdate = () => {
-  if(isFirstTime){
-    markSuccess();
-  }else if(isRolledBack){
-    Alert.alert('提示', '刚刚更新失败了,版本被回滚.');
-  }
-  //异步函数checkUpdate可以检查当前版本是否需要更新
-  checkUpdate(appKey).then(info => {
-    if (info.expired) {
-      Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
-        {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
-      ]);
-    } else if (info.upToDate) {
-      Alert.alert('提示', '您的应用版本已是最新.');
-    } else {
-      Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
-        {text: '是', onPress: ()=>{this.doUpdate(info)}},
-        {text: '否',},
-      ]);
-    }
-  }).catch(err => {
-    Alert.alert('提示', '更新失败.');
+var codePush  = require('react-native-code-push');
+export const checkIsUpdate = function(){
+  codePush.sync({
+      updateDialog: {
+        //是否显示更新discription
+        appendReleaseDescription: true,
+        //更新说明的前缀。 默认是” Description:
+        descriptionPrefix: "\n\n更新内容:\n",
+        mandatoryContinueButtonLabel:"立即更新",//强制更新的按钮文字，默认为continue
+        mandatoryUpdateMessage:"",//- 强制更新时，更新通知. Defaults to “An update is available that must be installed.”.
+        optionalIgnoreButtonLabel: '稍后',//非强制更新时，取消按钮文字,默认是ignore
+        optionalInstallButtonLabel: '后台更新',//非强制更新时，确认文字. Defaults to “Install”
+        optionalUpdateMessage: '有新版本了，是否更新？',//非强制更新时，更新通知. Defaults to “An update is available. Would you like to install it?”.
+        title: '更新提示'//要显示的更新通知的标题. Defaults to “Update available”.
+       },
+      installMode: codePush.InstallMode.IMMEDIATE
   });
 }

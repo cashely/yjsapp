@@ -44,6 +44,10 @@ import {ajaxMethod} from '../../actions/ajax';
 
 import Loading from '../common/loading';
 
+//检查更新组件
+import {checkIsUpdate} from '../config/checkUpdate';
+
+
 class Main extends Component {
   constructor(props){
     super(props);
@@ -65,6 +69,7 @@ class Main extends Component {
 
   }
   componentDidMount(){
+    checkIsUpdate();
     console.log(typeof JPushModule);
 
     //仅仅android才需要初始化
