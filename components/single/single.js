@@ -17,7 +17,8 @@ export default class Single extends Component {
   constructor(props){
     super(props);
     this.state = {
-      visible: false
+      visible: false,
+      isDowning:false
     }
   }
   _showShare = ()=> {
@@ -53,7 +54,7 @@ export default class Single extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    if(Platform.OS !== 'android')
+    if(Platform.OS !== 'android' || this.state.isDowning) return false;
     const android = RNFetchBlob.android
     const url = navState.url;
     console.log(url);
@@ -62,6 +63,9 @@ export default class Single extends Component {
     fileType = this._getmineType(fileType);
     console.log(fileType,'2');
     if(fileType){
+      this.setState({
+        isDowning:true
+      });
       RNFetchBlob.config({
         addAndroidDownloads : {
           useDownloadManager : true,
@@ -73,6 +77,9 @@ export default class Single extends Component {
       })
       .fetch('GET', navState.url)
       .then((res) => {
+          this.setState({
+            isDowning:false
+          });
           android.actionViewIntent(res.path(), fileType)
       })
     }
