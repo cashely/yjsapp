@@ -65,12 +65,28 @@ class Main extends Component {
     };
     this._isShowIntro = this._isShowIntro.bind(this);
   }
-  componentWillMount(){
 
+  _pushNotice = (id) => {
+    ajaxMethod('wpPosts/getWpPostsKeepList',{
+      postIds: JSON.stringify([id])
+    }).then((res)=>{
+      if(res.datas.length !==0 ) {
+        this.props.navigator.push({
+          component:Single,
+          name:'single',
+          id:id,
+          goBack:this.props.navigator.pop,
+          isShare:true,
+          isCollected:true,
+          navigator:this.props.navigator,
+          title:res.datas[0].postTitle,
+          postExcerpt:res.datas[0].postExcerpt
+        })
+      }
+    })
   }
   componentDidMount(){
     checkIsUpdate();
-    console.log(typeof JPushModule);
 
     //仅仅android才需要初始化
     if(Platform.OS === 'android'){
@@ -83,25 +99,18 @@ class Main extends Component {
           console.log(JSON.parse(map['cn.jpush.android.EXTRA']).id);
           let extra = JSON.parse(map['cn.jpush.android.EXTRA']);
           if(extra.id){
-            ajaxMethod('wpPosts/getWpPostsKeepList',{
-              postIds: JSON.stringify([extra.id])
-            }).then((res)=>{
-              if(res.datas.length !==0 ) {
-                this.props.navigator.push({
-                  component:Single,
-                  name:'single',
-                  id:extra.id,
-                  goBack:this.props.navigator.pop,
-                  isShare:true,
-                  isCollected:true,
-                  navigator:this.props.navigator,
-                  title:res.datas[0].postTitle,
-                  postExcerpt:res.datas[0].postExcerpt
-                })
-              }
-            })
+            this._pushNotice(extra.id);
           }
         });
+    }else{
+      var subscription = NativeAppEventEmitter.addListener(
+        'ReceiveNotification',
+        (notification) => {
+          if(notification.id){
+            this._pushNotice(notification.id);
+          }
+        }
+      );
     }
     // JPushModule.getRegistrationID((id)=>{
     //   console.log('getRegistrationID',id);

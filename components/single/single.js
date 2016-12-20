@@ -12,13 +12,16 @@ import Share from '../common/share';
 import NavigatorHeader from '../common/navigatorHeader';
 // import Share, {ShareSheet, Button} from 'react-native-share';
 
-import RNFetchBlob from 'react-native-fetch-blob';
+
 export default class Single extends Component {
   constructor(props){
     super(props);
     this.state = {
       visible: false,
       isDowning:false
+    };
+    if(Platform.OS == 'android'){
+      var RNFetchBlob = require('react-native-fetch-blob');
     }
   }
   _showShare = ()=> {

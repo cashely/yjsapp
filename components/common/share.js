@@ -34,14 +34,21 @@ export default class Sharea extends Component {
         return false;
     }
   }
+
+  _callBackMessage = (msg) => {
+    if(Platform.OS == 'android'){
+      ToastAndroid.show(msg,ToastAndroid.SHORT);
+    }else{
+      Alert.alert(msg);
+    }
+  }
   _shareWx = async () => {
     this._unInstallWx();
     this.props.hideHandle();
     try {
       await WeChat.shareToSession(this.state.shareInfo);
     } catch (e) {
-      console.log(e);
-      ToastAndroid.show(e.message,ToastAndroid.SHORT);
+      this._callBackMessage(e.message);
     }
 
   }
@@ -53,7 +60,7 @@ export default class Sharea extends Component {
         console.log(res);
       })
     } catch (e) {
-      ToastAndroid.show(e.message,ToastAndroid.SHORT);
+      this._callBackMessage(e.message);
     }
   }
   componentDidMount(){
@@ -67,7 +74,7 @@ export default class Sharea extends Component {
         }
       })
     } catch (e) {
-      ToastAndroid.show('分享错误',ToastAndroid.SHORT);
+      this._callBackMessage('分享错误');
     }
   }
   render(){

@@ -50,7 +50,6 @@
 		9F20DC9BB35A4C8AB562EB83 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 233541F4429C4D7BAE338338 /* Foundation.ttf */; };
 		B3CE50CA760F4349B6581D4E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5472F0E2BE3340DF83AFC40D /* MaterialIcons.ttf */; };
 		B6E73E48E7E84AFE9FA2B52F /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7550918D7228433B8239E4E3 /* EvilIcons.ttf */; };
-		C548D3CC160F44CB8A70ADF4 /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6E67928E394D91B109CA64 /* libRCTBEEPickerManager.a */; };
 		D039501A7E3648D6ACAC0FB9 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C62CFCFF5A479CB302F296 /* libRNSpinkit.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		DC7878624D50480EBF1F92CC /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1965C68907D4F5885EB5EFC /* Zocial.ttf */; };
 		EE90E146280A43DBBB98EBA2 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BE95C9E10F74B65BFCB2390 /* libRNVectorIcons.a */; };
@@ -229,7 +228,6 @@
 		5B02EB50066E450BACA59DA1 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		7550918D7228433B8239E4E3 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		7D6E67928E394D91B109CA64 /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		93E2AA3D59E649B295371798 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		9917E8971DD4626F0041BDF6 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -298,7 +296,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				36F81913DF784ABA8DC68867 /* libReactNativeIcons.a in Frameworks */,
 				EE90E146280A43DBBB98EBA2 /* libRNVectorIcons.a in Frameworks */,
-				C548D3CC160F44CB8A70ADF4 /* libRCTBEEPickerManager.a in Frameworks */,
 				D039501A7E3648D6ACAC0FB9 /* libRNSpinkit.a in Frameworks */,
 				F46E69EA60B94D038F1BD8A2 /* libRNShare.a in Frameworks */,
 				2A3E7B8905F24DFC91AEFD52 /* libRCTWeChat.a in Frameworks */,
@@ -622,11 +619,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = XVNEG4HFBG;
+						DevelopmentTeam = CHKCY79C2P;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = XVNEG4HFBG;
+						DevelopmentTeam = CHKCY79C2P;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -950,7 +948,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = XVNEG4HFBG;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = CHKCY79C2P;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -974,8 +973,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = XVNEG4HFBG;
+				DEVELOPMENT_TEAM = CHKCY79C2P;
 				INFOPLIST_FILE = yjsappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1002,7 +1002,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = XVNEG4HFBG;
+				DEVELOPMENT_TEAM = CHKCY79C2P;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1010,7 +1010,6 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
@@ -1030,7 +1029,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.yjsapp;
+				PRODUCT_BUNDLE_IDENTIFIER = reactjs.yjsapp.com;
 				PRODUCT_NAME = "广东药交";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1049,7 +1048,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XVNEG4HFBG;
+				DEVELOPMENT_TEAM = CHKCY79C2P;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1057,7 +1056,6 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-icons/ios/ReactNativeIcons/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios/**",
@@ -1077,7 +1075,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.yjsapp;
+				PRODUCT_BUNDLE_IDENTIFIER = reactjs.yjsapp.com;
 				PRODUCT_NAME = "广东药交";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1105,9 +1103,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: haoyang cui (9949Q2J9AL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: haoyang cui (9949Q2J9AL)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = LEKC2XD894;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1166,9 +1165,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: haoyang cui (9949Q2J9AL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: haoyang cui (9949Q2J9AL)";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = LEKC2XD894;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

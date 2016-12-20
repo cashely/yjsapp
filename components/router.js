@@ -27,6 +27,7 @@ import Launch from './common/launch';
 
 class Router extends Component {
   constructor(props){
+    console.log(WeChat,'wechat');
     super(props);
     this.state={
       infinite:true,

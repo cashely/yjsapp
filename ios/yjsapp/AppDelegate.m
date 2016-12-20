@@ -16,6 +16,11 @@
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #endif
+
+@interface AppDelegate()
+
+@end
+
 //#import "RCTHotUpdate.h"
 
 
@@ -51,22 +56,46 @@
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
   
   
-  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+  if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+    
+    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+    
+    entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+    
+    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    
+  }
+  
+  else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+    
     //可以添加自定义categories
-    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                      UIUserNotificationTypeSound |
-                                                      UIUserNotificationTypeAlert)
-                                          categories:nil];
-  } else {
-    //iOS 8以前 categories 必须为nil
+    
     [JPUSHService registerForRemoteNotificationTypes:(UNAuthorizationOptionBadge |
+                                                      
                                                       UNAuthorizationOptionSound |
+                                                      
                                                       UNAuthorizationOptionAlert)
+     
                                           categories:nil];
+    
+  }
+  
+  else {
+    
+    //categories 必须为nil
+    
+    [JPUSHService registerForRemoteNotificationTypes:(UNAuthorizationOptionBadge |
+                                                      
+                                                      UNAuthorizationOptionSound |
+                                                      
+                                                      UNAuthorizationOptionAlert)
+     
+                                          categories:nil];
+    
   }
   
   [JPUSHService setupWithOption:launchOptions appKey:@"5090506c66d830d548121685"
-                        channel:channel apsForProduction:isProduction];
+                        channel:channel apsForProduction:nil];
   
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
